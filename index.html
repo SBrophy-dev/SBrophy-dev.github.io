@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Stuart Brophy — Infrastructure Engineer specialising in AWS cloud, automation, and security. Based in Co. Carlow, Ireland.">
+
+  <title>Stuart Brophy — Infrastructure Engineer</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content="Stuart Brophy — Infrastructure Engineer">
+  <meta property="og:description" content="Infrastructure Engineer specialising in AWS cloud, CI/CD pipelines, automation, and security.">
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://sbrophy.click">
+  <meta name="theme-color" content="#111118" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#FAFAFE" media="(prefers-color-scheme: light)">
+
+  <script>
+    (function () {
+      var s = localStorage.getItem('sb-theme');
+      var t = s || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+      // Initialize mode to visual by default (prevents flash of hidden content)
+      var m = localStorage.getItem('sb-mode');
+      if (m !== 'terminal') m = 'visual';
+      document.documentElement.setAttribute('data-mode', m);
+      // Initialize reduced motion preference
+      var r = localStorage.getItem('sb-reduced-motion');
+      if (r === null) {
+        // Use system preference if no stored preference
+        r = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      } else {
+        r = r === 'true';
+      }
+      document.documentElement.setAttribute('data-reduced-motion', r ? 'true' : 'false');
+    }());
+  </script>
+
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500&f[]=satoshi@700,500,400&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500&f[]=satoshi@700,500,400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
+
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+
+  <nav class="nav" role="navigation" aria-label="Primary navigation">
+    <div class="nav-container">
+
+      <a href="#" class="nav-logo" aria-label="Stuart Brophy — Home">
+        <svg class="nav-logo-svg" viewBox="0 0 155 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Monogram mark -->
+          <rect x="0" y="0" width="36" height="36" rx="8" fill="var(--accent)"/>
+          <text x="18" y="25" text-anchor="middle" font-family="'Cabinet Grotesk','Segoe UI',sans-serif" font-weight="800" font-size="20" fill="#0D0D0F" letter-spacing="-0.5">SB</text>
+          <!-- Wordmark -->
+          <text x="46" y="23" font-family="'Cabinet Grotesk','Segoe UI',sans-serif" font-weight="700" font-size="17" fill="var(--text-1)" letter-spacing="-0.3">sbrophy</text>
+          <text x="113" y="23" font-family="'Cabinet Grotesk','Segoe UI',sans-serif" font-weight="700" font-size="17" fill="var(--accent)" letter-spacing="-0.3">.click</text>
+        </svg>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="#skills"          class="nav-link">Skills</a></li>
+        <li><a href="#experience"      class="nav-link">Experience</a></li>
+        <li><a href="#certifications"  class="nav-link">Certs</a></li>
+        <li><a href="#education"       class="nav-link">Education</a></li>
+        <li><a href="#about"           class="nav-link">About</a></li>
+        <li><a href="#contact"         class="nav-link">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light / dark mode">
+        <i data-lucide="sun"  class="icon-sun"  aria-hidden="true"></i>
+        <i data-lucide="moon" class="icon-moon" aria-hidden="true"></i>
+      </button>
+      <button class="mode-toggle" id="modeToggle" aria-label="Switch to terminal mode">
+        <i data-lucide="terminal" class="icon-terminal" aria-hidden="true"></i>
+        <i data-lucide="layout"   class="icon-layout"  aria-hidden="true"></i>
+      </button>
+      <button class="motion-toggle" id="motionToggle" aria-label="Toggle reduced motion">
+        <i data-lucide="zap" class="icon-motion-on" aria-hidden="true"></i>
+        <i data-lucide="zap-off" class="icon-motion-off" aria-hidden="true"></i>
+      </button>
+      <button class="nav-mobile-toggle" id="mobileMenuToggle"
+              aria-label="Toggle mobile menu" aria-expanded="false">
+        <i data-lucide="menu" class="icon-menu-open"  aria-hidden="true"></i>
+        <i data-lucide="x"    class="icon-menu-close" aria-hidden="true"></i>
+      </button>
+
+    </div>
+    <div class="nav-mobile" id="mobileMenu" aria-hidden="true">
+      <ul role="list">
+        <li><a href="#skills"         class="nav-link">Skills</a></li>
+        <li><a href="#experience"     class="nav-link">Experience</a></li>
+        <li><a href="#certifications" class="nav-link">Certs</a></li>
+        <li><a href="#education"      class="nav-link">Education</a></li>
+        <li><a href="#about"          class="nav-link">About</a></li>
+        <li><a href="#contact"        class="nav-link">Contact</a></li>
+        <li class="nav-mobile-motion">
+          <button class="nav-link motion-toggle-mobile" id="motionToggleMobile" aria-label="Toggle reduced motion">
+            <i data-lucide="zap" class="icon-motion-on" aria-hidden="true"></i>
+            <span>Reduce Motion</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <section class="hero" id="hero" aria-labelledby="hero-name">
+      <div class="hero-container">
+        <div class="hero-badge" aria-label="Open to new opportunities">
+          <span class="hero-badge-dot" aria-hidden="true"></span>
+          <span>Open to new opportunities</span>
+        </div>
+        <div class="hero-logo" aria-hidden="true">
+          <svg class="hero-logo-svg" viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg">
+            <!-- Icon mark — rounded square with SB monogram -->
+            <rect x="0" y="0" width="72" height="72" rx="16" fill="var(--accent)"/>
+            <!-- Cloud hint: subtle arc inside the mark -->
+            <path d="M18 44 C18 44,14 44,14 38 C14 32,20 29,26 30 C26 24,32 21,38 22 C43 19,50 19,54 24 C58 22,64 25,65 30 C69 30,72 34,72 38 C72 42,69 44,67 44" stroke="#0D0D0F" stroke-width="1.5" fill="none" opacity="0.15" stroke-linecap="round"/>
+            <!-- SB letters -->
+            <text x="36" y="50" text-anchor="middle" font-family="'Cabinet Grotesk','Segoe UI',sans-serif" font-weight="800" font-size="38" fill="#0D0D0F" letter-spacing="-1">SB</text>
+            <!-- Terminal cursor blink line -->
+            <rect x="56" y="26" width="3" height="28" rx="1.5" fill="#0D0D0F" opacity="0.25"/>
+            <!-- Wordmark -->
+            <text x="88" y="35" font-family="'Cabinet Grotesk','Segoe UI',sans-serif" font-weight="800" font-size="34" fill="var(--text-1)" letter-spacing="-1">sbrophy</text>
+            <text x="88" y="65" font-family="'Cabinet Grotesk','Segoe UI',sans-serif" font-weight="700" font-size="30" fill="var(--accent)" letter-spacing="-0.5">.click</text>
+            <!-- Small cursor icon -->
+            <g transform="translate(175, 48) scale(0.45)">
+              <path d="M0 0 L0 36 L10 27 L20 44 L27 40 L17 23 L30 21 Z" fill="var(--accent)" opacity="0.5"/>
+            </g>
+          </svg>
+        </div>
+        <h1 class="hero-name" id="hero-name">Stuart<br><span class="hero-name-accent">Brophy</span></h1>
+
+        <!-- Role -->
+        <p class="hero-role">
+          <span class="hero-role-prefix">$</span>
+          <span class="hero-role-static">Infrastructure Engineer</span>
+          <span class="hero-role-sep">—</span>
+          <span id="typingText"></span>
+        </p>
+        <p class="hero-tagline">
+          Building reliable AWS infrastructure at enterprise scale — from CI/CD pipelines and serverless workflows to process automation and cross-platform middleware.
+        </p>
+        <div class="hero-actions">
+          <a href="assets/Stuart_Brophy_CV.pdf" class="btn btn-primary" download
+             aria-label="Download Stuart Brophy CV as PDF">
+            <i data-lucide="download" aria-hidden="true"></i>
+            Download CV
+          </a>
+          <a href="#experience" class="btn btn-secondary"
+             aria-label="Scroll to experience section">
+            View My Work
+            <i data-lucide="arrow-down" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="hero-contact">
+          <a href="mailto:Stuartbrophy157@gmail.com" class="hero-contact-link"
+             aria-label="Email Stuart Brophy at Stuartbrophy157@gmail.com">
+            <i data-lucide="mail" aria-hidden="true"></i>
+            <span>Stuartbrophy157@gmail.com</span>
+          </a>
+          <a href="tel:+353866614077" class="hero-contact-link"
+             aria-label="Call Stuart Brophy">
+            <i data-lucide="phone" aria-hidden="true"></i>
+            <span>(086) 661-4077</span>
+          </a>
+          <span class="hero-contact-link" aria-label="Location: Co. Carlow, Ireland">
+            <i data-lucide="map-pin" aria-hidden="true"></i>
+            <span>Co. Carlow, Ireland</span>
+          </span>
+        </div>
+
+      </div>
+    </section>
+
+         
+    <section class="section skills-section" id="skills" aria-labelledby="skills-heading">
+      <div class="container">
+
+        <div class="section-header">
+          <span class="section-label">Capabilities</span>
+          <h2 id="skills-heading">Skills &amp; Technologies</h2>
+          <p class="section-desc">
+            Hands-on expertise across cloud infrastructure, DevOps, security, and integration — built in regulated enterprise environments.
+          </p>
+        </div>
+
+        <div class="skills-grid">
+          <div class="skill-category">
+            <div class="skill-category-header">
+              <span class="skill-category-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                </svg>
+              </span>
+              <h3>Cloud &amp; Infrastructure</h3>
+            </div>
+            <div class="skill-pills">
+              <span class="skill-pill skill-pill-accent">AWS</span>
+              <span class="skill-pill">Connect</span>
+              <span class="skill-pill">Lambda</span>
+              <span class="skill-pill">S3</span>
+              <span class="skill-pill">DynamoDB</span>
+              <span class="skill-pill">EC2</span>
+              <span class="skill-pill">Terraform</span>
+              <span class="skill-pill">CloudFormation</span>
+              <span class="skill-pill">Linux</span>
+              <span class="skill-pill">Networking</span>
+              <span class="skill-pill">IAM</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <div class="skill-category-header">
+              <span class="skill-category-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="16 18 22 12 16 6"/>
+                  <polyline points="8 6 2 12 8 18"/>
+                </svg>
+              </span>
+              <h3>Automation &amp; DevOps</h3>
+            </div>
+            <div class="skill-pills">
+              <span class="skill-pill skill-pill-accent">Python</span>
+              <span class="skill-pill">PowerShell</span>
+              <span class="skill-pill">Bash</span>
+              <span class="skill-pill">CI/CD</span>
+              <span class="skill-pill">RPA</span>
+              <span class="skill-pill">Serverless</span>
+              <span class="skill-pill">Microservices</span>
+              <span class="skill-pill">Version Control</span>
+              <span class="skill-pill">Agile / SAFe</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <div class="skill-category-header">
+              <span class="skill-category-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </span>
+              <h3>Security &amp; Compliance</h3>
+            </div>
+            <div class="skill-pills">
+              <span class="skill-pill skill-pill-accent">DevSecOps</span>
+              <span class="skill-pill">Incident Response</span>
+              <span class="skill-pill">IAM</span>
+              <span class="skill-pill">GDPR</span>
+              <span class="skill-pill">Data Protection</span>
+              <span class="skill-pill">Monitoring</span>
+              <span class="skill-pill">Risk Assessment</span>
+              <span class="skill-pill">Cryptography</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <div class="skill-category-header">
+              <span class="skill-category-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="3" width="6" height="6" rx="1"/>
+                  <rect x="16" y="3" width="6" height="6" rx="1"/>
+                  <rect x="9" y="15" width="6" height="6" rx="1"/>
+                  <path d="M5 9v4M19 9v2M12 15v-2M5 13h14"/>
+                </svg>
+              </span>
+              <h3>Middleware &amp; Integration</h3>
+            </div>
+            <div class="skill-pills">
+              <span class="skill-pill skill-pill-accent">MuleSoft / Anypoint</span>
+              <span class="skill-pill">IBM MQ</span>
+              <span class="skill-pill">PHP</span>
+              <span class="skill-pill">Databases</span>
+              <span class="skill-pill">REST APIs</span>
+              <span class="skill-pill">IIS / MySQL</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section experience-section" id="experience" aria-labelledby="experience-heading">
+      <div class="container">
+
+        <div class="section-header">
+          <span class="section-label">Career</span>
+          <h2 id="experience-heading">Experience</h2>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker" aria-hidden="true"></div>
+            <div class="timeline-content">
+              <div class="timeline-meta">
+                <div class="timeline-role-info">
+                  <h3 class="timeline-role">Infrastructure Engineer</h3>
+                  <span class="timeline-company">Unum Ireland</span>
+                  <span class="timeline-location">
+                    <i data-lucide="map-pin" aria-hidden="true"></i>
+                    Carlow
+                  </span>
+                </div>
+                <span class="timeline-dates">
+                  <i data-lucide="calendar" aria-hidden="true"></i>
+                  Jan 2024 – Present
+                </span>
+              </div>
+              <ul class="timeline-bullets">
+                <li>Support and enhance AWS-based contact centre infrastructure (Connect, Lambda, EC2, S3, DynamoDB) across large-scale enterprise environments.</li>
+                <li>Contribute to CI/CD pipelines and PaaS environments, improving release reliability and deployment speed for contact centre workloads.</li>
+                <li>Implement process automation and RPA solutions to reduce manual effort, streamline operations, and improve incident response.</li>
+                <li>Provide on-call support across cloud and on-prem middleware platforms; handle Terraform-based deployments, incident RCA, and performance and availability improvements.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker" aria-hidden="true"></div>
+            <div class="timeline-content">
+              <div class="timeline-meta">
+                <div class="timeline-role-info">
+                  <h3 class="timeline-role">Designer &amp; IT Administrator</h3>
+                  <span class="timeline-company">CGL Retail Solutions</span>
+                  <span class="timeline-location">
+                    <i data-lucide="map-pin" aria-hidden="true"></i>
+                    Carlow
+                  </span>
+                </div>
+                <span class="timeline-dates">
+                  <i data-lucide="calendar" aria-hidden="true"></i>
+                  Mar 2015 – Sep 2021
+                </span>
+              </div>
+              <ul class="timeline-bullets">
+                <li>Led end-to-end client projects combining design delivery with technical documentation and stakeholder presentations.</li>
+                <li>Managed company IT systems (servers, workstations, networking, storage) and served as Data Protection Officer.</li>
+                <li>Oversaw GDPR compliance, incident resolution, and data protection policy drafting.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker" aria-hidden="true"></div>
+            <div class="timeline-content">
+              <div class="timeline-meta">
+                <div class="timeline-role-info">
+                  <h3 class="timeline-role">Jr. Web Developer</h3>
+                  <span class="timeline-company">Design North</span>
+                  <span class="timeline-location">
+                    <i data-lucide="map-pin" aria-hidden="true"></i>
+                    Louth
+                  </span>
+                </div>
+                <span class="timeline-dates">
+                  <i data-lucide="calendar" aria-hidden="true"></i>
+                  Mar 2013 – Sep 2013
+                </span>
+              </div>
+              <ul class="timeline-bullets">
+                <li>Developed and maintained client websites using HTML, CSS, JavaScript, and PHP.</li>
+                <li>Assisted with system administration tasks (IIS, MySQL) and issue troubleshooting.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section certs-section" id="certifications" aria-labelledby="certs-heading">
+      <div class="container">
+
+        <div class="section-header">
+          <span class="section-label">Credentials</span>
+          <h2 id="certs-heading">Certifications</h2>
+        </div>
+
+        <div class="certs-grid">
+          <div class="cert-card">
+            <div class="cert-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+              </svg>
+            </div>
+            <div class="cert-content">
+              <h3 class="cert-name">AWS Certified Cloud Practitioner</h3>
+              <span class="cert-issuer">Amazon Web Services</span>
+            </div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div class="cert-content">
+              <h3 class="cert-name">SAFe 6 for Teams</h3>
+              <span class="cert-issuer">Scaled Agile</span>
+            </div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="6"/>
+                <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+              </svg>
+            </div>
+            <div class="cert-content">
+              <h3 class="cert-name">SAFe 6 Scrum Master (SSM)</h3>
+              <span class="cert-issuer">Scaled Agile</span>
+            </div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </div>
+            <div class="cert-content">
+              <h3 class="cert-name">GDPR &amp; Drafting Data Protection Policies</h3>
+              <span class="cert-issuer">Carlow Chamber</span>
+            </div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <div class="cert-content">
+              <h3 class="cert-name">DevSecOps Path</h3>
+              <span class="cert-issuer">TryHackMe</span>
+            </div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <div class="cert-content">
+              <h3 class="cert-name">Web Fundamentals</h3>
+              <span class="cert-issuer">TryHackMe</span>
+            </div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </div>
+            <div class="cert-content">
+              <h3 class="cert-name">Complete Beginner · Pre Security · Intro to Cybersecurity</h3>
+              <span class="cert-issuer">TryHackMe</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section education-section" id="education" aria-labelledby="education-heading">
+      <div class="container">
+
+        <div class="section-header">
+          <span class="section-label">Academic</span>
+          <h2 id="education-heading">Education</h2>
+        </div>
+
+        <div class="education-grid">
+          <div class="edu-card">
+            <div class="edu-header">
+              <div>
+                <h3 class="edu-degree">BA in Cybercrime &amp; IT Security</h3>
+                <span class="edu-grade">First Class Honours — 1:1</span>
+              </div>
+              <span class="edu-dates">2021 – 2024</span>
+            </div>
+            <p class="edu-institution">South-East Technological University, Carlow</p>
+            <div class="edu-subjects">
+              <span class="edu-subject">Networking</span>
+              <span class="edu-subject">Scripting for Cybercrime</span>
+              <span class="edu-subject">Incident Handling &amp; Risk Assessment</span>
+              <span class="edu-subject">Secure Systems Administration</span>
+              <span class="edu-subject">Cybercrime Legislation &amp; Compliance</span>
+              <span class="edu-subject">Cryptography</span>
+              <span class="edu-subject">Discrete Structures &amp; Algorithms</span>
+            </div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-header">
+              <div>
+                <h3 class="edu-degree">QQI Level 5 — Computers &amp; Networking</h3>
+                <span class="edu-grade">Distinction</span>
+              </div>
+              <span class="edu-dates">2020 – 2021</span>
+            </div>
+            <p class="edu-institution">Carlow Institute, Carlow</p>
+            <div class="edu-subjects">
+              <span class="edu-subject">ICT Security Policies &amp; Management</span>
+              <span class="edu-subject">Networking Essentials</span>
+              <span class="edu-subject">Programming &amp; Design Principles</span>
+              <span class="edu-subject">Operating Systems</span>
+              <span class="edu-subject">Communications</span>
+              <span class="edu-subject">Maths for IT</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section about-section" id="about" aria-labelledby="about-heading">
+      <div class="container">
+
+        <div class="section-header">
+          <span class="section-label">Background</span>
+          <h2 id="about-heading">About</h2>
+        </div>
+
+        <div class="about-content">
+          <p class="about-text">
+            I'm a Co. Carlow-based Infrastructure Engineer with a background spanning cloud architecture, security, and automation — shaped by years working across enterprise AWS environments and a First Class Honours degree earned while working full-time. My focus is on building infrastructure that's reliable by design: automated where it should be, secured from the ground up, and observable enough to fail gracefully. I'm particularly drawn to the intersection of cloud engineering and security, where getting the architecture right matters as much as writing the code.
+          </p>
+          <p class="about-text">
+            Outside of work I stay close to the things that keep me sharp: exploring developments in AI, homelab tinkering, and PC building. I play soccer, pick up the guitar when time allows, and try to get out hiking when Carlow's weather cooperates. Photography has been a long-running interest — there's something in the discipline of framing a shot that maps surprisingly well to how I think about system design.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section contact-section" id="contact" aria-labelledby="contact-heading">
+      <div class="container">
+
+        <div class="section-header">
+          <span class="section-label">Get in Touch</span>
+          <h2 id="contact-heading">Contact</h2>
+          <p class="section-desc">
+            Open to new roles, collaborations, and conversations about cloud infrastructure, automation, and security.
+          </p>
+        </div>
+
+        <div class="contact-cards">
+
+          <a href="mailto:Stuartbrophy157@gmail.com" class="contact-card"
+             aria-label="Send an email to Stuart Brophy">
+            <i data-lucide="mail" aria-hidden="true"></i>
+            <span class="contact-label">Email</span>
+            <span class="contact-value">Stuartbrophy157@gmail.com</span>
+          </a>
+
+          <a href="tel:+353866614077" class="contact-card"
+             aria-label="Call Stuart Brophy">
+            <i data-lucide="phone" aria-hidden="true"></i>
+            <span class="contact-label">Phone</span>
+            <span class="contact-value">(086) 661-4077</span>
+          </a>
+
+          <div class="contact-card">
+            <i data-lucide="map-pin" aria-hidden="true"></i>
+            <span class="contact-label">Location</span>
+            <span class="contact-value">Co. Carlow, Ireland</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+
+        <div class="footer-left">
+          <span class="footer-name">
+            <svg class="footer-logo-svg" viewBox="0 0 120 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="0" y="0" width="20" height="20" rx="5" fill="var(--accent)"/>
+              <text x="10" y="14.5" text-anchor="middle" font-family="'Cabinet Grotesk','Segoe UI',sans-serif" font-weight="800" font-size="11.5" fill="#0D0D0F" letter-spacing="-0.3">SB</text>
+              <text x="26" y="14" font-family="'Cabinet Grotesk','Segoe UI',sans-serif" font-weight="700" font-size="11" fill="var(--text-1)" letter-spacing="-0.2">sbrophy</text>
+              <text x="74" y="14" font-family="'Cabinet Grotesk','Segoe UI',sans-serif" font-weight="700" font-size="11" fill="var(--accent)" letter-spacing="-0.2">.click</text>
+            </svg>
+          </span>
+          <span class="footer-copy">&copy; 2026. All rights reserved.</span>
+        </div>
+
+        <div class="footer-right">
+          <a href="#" class="footer-icon-link" aria-label="GitHub (coming soon)">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+            </svg>
+          </a>
+          <a href="#" class="footer-icon-link" aria-label="LinkedIn (coming soon)">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </a>
+          <span class="footer-built">
+            Built on
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                 stroke="#FF9900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+            </svg>
+            AWS
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+       
+  <div class="terminal" id="terminal" role="application" aria-label="Terminal interface" hidden>
+    <div class="terminal-output" id="terminalOutput" role="log" aria-live="polite" aria-label="Command output">
+    </div>
+    <div class="terminal-input-line">
+      <span class="terminal-prompt" aria-hidden="true">visitor@sbrophy:~$</span>
+      <input 
+        type="text" 
+        class="terminal-input" 
+        id="terminalInput" 
+        aria-label="Command input"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+      >
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.544.0/dist/umd/lucide.min.js" defer></script>
+  <script src="assets/animations/core.js" defer></script>
+  <script src="assets/animations/network.js" defer></script>
+  <script src="assets/animations/terminal.js" defer></script>
+  <script src="assets/animations/scroll.js" defer></script>
+  <script src="assets/animations/hover.js" defer></script>
+  <script src="assets/animations/polish.js" defer></script>
+  <script src="assets/script.js" defer></script>
+
+</body>
+</html>

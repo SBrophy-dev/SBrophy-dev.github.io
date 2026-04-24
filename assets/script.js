@@ -165,11 +165,11 @@
   function formatSkillCategory(category, skills) { return '\n  [' + category + ']\n  ' + skills.join(' · ') + '\n'; }
 
   var commands = {
-    'help': function() { return formatHeader('Available Commands') + '\n  help, ?          Show this help message\n  home             Display introduction\n  logo             Display the SBrophy.click logo\n  skills           Display skills & technologies\n  experience, exp  Display work experience\n  certs            Display certifications\n  education, edu   Display education\n  about            Display about section\n  contact          Display contact information\n  matrix           Toggle Matrix background effect\n  sound            Toggle sound effects\n  clear, cls       Clear terminal output\n  exit, quit       Return to visual mode\n\n  Tip: Use ↑/↓ arrows to navigate command history\n'; },
+    'help': function() { return formatHeader('Available Commands') + '\n  help, ?          Show this help message\n  home             Display introduction\n  logo             Display the SBrophy-dev logo\n  skills           Display skills & technologies\n  experience, exp  Display work experience\n  certs            Display certifications\n  education, edu   Display education\n  about            Display about section\n  contact          Display contact information\n  matrix           Toggle Matrix background effect\n  sound            Toggle sound effects\n  clear, cls       Clear terminal output\n  exit, quit       Return to visual mode\n\n  Tip: Use ↑/↓ arrows to navigate command history\n'; },
     '?': function() { return commands.help(); },
     'logo': function() {
       if (typeof ASCIIBanner !== 'undefined') return '\n' + ASCIIBanner.getPlainText(false) + '\n';
-      return '\n   ╔═══════╗\n   ║  S B  ║  sbrophy.click\n   ╚═══════╝\n';
+      return '\n   ╔═══════╗\n   ║  S B  ║  SBrophy-dev\n   ╚═══════╝\n';
     },
     'home': function() { return formatHeader('Stuart Brophy') + '\n  ' + cvData.hero.name + '\n  ' + cvData.hero.role + ' — ' + cvData.hero.focus + '\n\n  ' + cvData.hero.tagline + '\n\n  ● ' + cvData.hero.availability + '\n'; },
     'skills': function() { var o = formatHeader('Skills & Technologies') + '\n  Hands-on expertise across cloud infrastructure, DevOps, security,\n  and integration — built in regulated enterprise environments.\n'; cvData.skills.forEach(function(c) { o += formatSkillCategory(c.category, c.items); }); return o; },
@@ -200,7 +200,7 @@
   function getWelcomeMessage() {
     var output = '\n';
     if (typeof ASCIIBanner !== 'undefined') { output += ASCIIBanner.getPlainText() + '\n'; }
-    else { output += '  ╔══════════════════════════════════════════════════╗\n  ║   Welcome to sbrophy.click terminal interface    ║\n  ║   Type "help" for available commands             ║\n  ╚══════════════════════════════════════════════════╝\n'; }
+    else { output += '  ╔══════════════════════════════════════════════════╗\n  ║   Welcome to SBrophy-dev terminal interface      ║\n  ║   Type "help" for available commands             ║\n  ╚══════════════════════════════════════════════════╝\n'; }
     output += '\n';
     return output;
   }
@@ -222,7 +222,7 @@
     var trimmed = input.trim().toLowerCase();
     if (!trimmed) return;
     if (typeof TerminalFeedback !== 'undefined' && TerminalFeedback.getIsLoading()) return;
-    renderOutput('\nvisitor@sbrophy:~$ ' + input + '\n', true);
+    renderOutput('\nvisitor@sbrophy-dev:~$ ' + input + '\n', true);
     if (trimmed === 'clear' || trimmed === 'cls') { clearOutput(); return; }
     if (trimmed === 'exit' || trimmed === 'quit') { switchToVisualMode(); return; }
     var handler = commands[trimmed];

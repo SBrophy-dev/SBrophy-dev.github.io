@@ -100,7 +100,7 @@ const ASCIIBanner = {
   ┌──────────────────────────────────────────────────┐
   │                                                  │
   │   ╔═══════╗                                      │
-  │   ║  S B  ║  sbrophy.click                       │
+  │   ║  S B  ║  SBrophy-dev                         │
   │   ╚═══════╝                                      │
   │                                                  │
   │   Infrastructure Engineer                        │
@@ -113,7 +113,7 @@ const ASCIIBanner = {
   ╔══════════════════════════════════════════════════╗
   ║                                                  ║
   ║   ┏━━━━━━━┓                                      ║
-  ║   ┃  S B  ┃  sbrophy.click                       ║
+  ║   ┃  S B  ┃  SBrophy-dev                         ║
   ║   ┗━━━━━━━┛  terminal v1.0                       ║
   ║                                                  ║
   ║   ☁ Cloud  ·  ⚙ Automation  ·  🔒 Security      ║
@@ -126,7 +126,7 @@ const ASCIIBanner = {
   │                                                  │
   │   ┌───────┐                                      │
   │   │ ╔═╗╔╗ │                                      │
-  │   │ ╚═╗╠╩╗│  sbrophy.click                       │
+  │   │ ╚═╗╠╩╗│  SBrophy-dev                         │
   │   │ ╚═╝╚═╝│  terminal v1.0                       │
   │   └───────┘                                      │
   │                                                  │

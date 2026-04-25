@@ -165,7 +165,7 @@
   function formatSkillCategory(category, skills) { return '\n  [' + category + ']\n  ' + skills.join(' · ') + '\n'; }
 
   var commands = {
-    'help': function() { return formatHeader('Available Commands') + '\n  help, ?          Show this help message\n  home             Display introduction\n  logo             Display the SBrophy-dev logo\n  skills           Display skills & technologies\n  experience, exp  Display work experience\n  certs            Display certifications\n  education, edu   Display education\n  about            Display about section\n  contact          Display contact information\n  matrix           Toggle Matrix background effect\n  sound            Toggle sound effects\n  clear, cls       Clear terminal output\n  exit, quit       Return to visual mode\n\n  Tip: Use ↑/↓ arrows to navigate command history\n'; },
+    'help': function() { return formatHeader('Available Commands') + '\n  help, ?          Show this help message\n  home             Display introduction\n  logo             Display the SBrophy-dev logo\n  skills           Display skills & technologies\n  experience, exp  Display work experience\n  projects         Display side projects\n  certs            Display certifications\n  education, edu   Display education\n  about            Display about section\n  contact          Display contact information\n  matrix           Toggle Matrix background effect\n  sound            Toggle sound effects\n  clear, cls       Clear terminal output\n  exit, quit       Return to visual mode\n\n  Tip: Use ↑/↓ arrows to navigate command history\n'; },
     '?': function() { return commands.help(); },
     'logo': function() {
       if (typeof ASCIIBanner !== 'undefined') return '\n' + ASCIIBanner.getPlainText(false) + '\n';
@@ -177,6 +177,7 @@
     'exp': function() { return commands.experience(); },
     'certs': function() { var o = formatHeader('Certifications'); cvData.certifications.forEach(function(c) { o += '\n  ' + c.name + '\n    ' + c.issuer + '\n'; }); return o; },
     'certifications': function() { return commands.certs(); },
+    'projects': function() { return formatHeader('Side Projects') + '\n  [⚔️ Dev Legend: Code RPG]\n  VS Code Extension · TypeScript · Vite\n  A VS Code extension that turns daily coding into a persistent RPG.\n  Track 19 skills with an OSRS-style XP curve, character classes,\n  achievements, and a pixel-art dashboard.\n\n  [📚 Django Learning Dashboard]\n  Full-Stack · Django · PostgreSQL · Docker\n  An interactive web app that teaches Django through hands-on modules.\n  Features sandboxed code execution, progress tracking, achievements,\n  and a REST API with Swagger docs.\n\n  [🏰 Realms of Iron]\n  Browser Game · React 19 · TypeScript · Vitest\n  A grand strategy game running entirely in the browser. Lead one of\n  10 factions through diplomacy, economics, and military conquest\n  with WEGO simultaneous turns and utility-based AI.\n'; },
     'education': function() { var o = formatHeader('Education'); cvData.education.forEach(function(e) { o += '\n  ' + e.degree + '\n  ' + e.institution + '\n  ' + e.dates + ' · ' + e.grade + '\n\n  Subjects: ' + e.subjects.join(', ') + '\n'; }); return o; },
     'edu': function() { return commands.education(); },
     'about': function() { var o = formatHeader('About') + '\n'; cvData.about.forEach(function(p) { o += '  ' + p + '\n\n'; }); return o; },
@@ -303,6 +304,8 @@
       typeof TimelineAnimator !== 'undefined' ? TimelineAnimator : null,
       typeof SkillsAnimator !== 'undefined' ? SkillsAnimator : null,
       typeof CertsAnimator !== 'undefined' ? CertsAnimator : null,
+      typeof ProjectsAnimator !== 'undefined' ? ProjectsAnimator : null,
+      typeof ProjectCarousel !== 'undefined' ? ProjectCarousel : null,
       typeof ScrollProgress !== 'undefined' ? ScrollProgress : null,
       typeof ParallaxEffect !== 'undefined' ? ParallaxEffect : null,
       typeof TiltEffect !== 'undefined' ? TiltEffect : null,

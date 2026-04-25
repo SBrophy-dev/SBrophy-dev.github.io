@@ -3,15 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Stuart Brophy — Infrastructure Engineer specialising in AWS cloud, automation, and security. Based in Co. Carlow, Ireland.">
+  <meta name="description" content="Stuart Brophy — Infrastructure Engineer specialising in AWS, automation, and security. Based in Co. Carlow, Ireland.">
+  <meta name="keywords" content="Infrastructure Engineer, AWS, Cloud Engineer, DevOps, CI/CD, Automation, Security, Cloud Infrastructure, Ireland, Carlow, Stuart Brophy">
+  <meta name="author" content="Stuart Brophy">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://sbrophy-dev.github.io/">
 
-  <title>Stuart Brophy — Infrastructure Engineer</title>
+  <title>Stuart Brophy — Infrastructure Engineer | AWS Cloud & DevOps Specialist</title>
 
   <!-- Open Graph -->
-  <meta property="og:title"       content="Stuart Brophy — Infrastructure Engineer">
-  <meta property="og:description" content="Infrastructure Engineer specialising in AWS cloud, CI/CD pipelines, automation, and security.">
+  <meta property="og:title"       content="Stuart Brophy — Infrastructure Engineer | AWS Cloud & DevOps Specialist">
+  <meta property="og:description" content="AWS infrastructure, CI/CD, automation and security.">
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="https://sbrophy-dev.github.io/">
+  <meta property="og:image"       content="https://sbrophy-dev.github.io/assets/favicon.svg">
+  <meta property="og:site_name"   content="Stuart Brophy Portfolio">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Stuart Brophy — Infrastructure Engineer">
+  <meta name="twitter:description" content="AWS infrastructure, CI/CD, automation and security.">
+  <meta name="twitter:image" content="https://sbrophy-dev.github.io/assets/favicon.svg">
   <meta name="theme-color" content="#111118" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#FAFAFE" media="(prefers-color-scheme: light)">
 
@@ -43,8 +55,50 @@
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500&f[]=satoshi@700,500,400&display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
 
+  <link rel="preload" href="assets/style.css" as="style">
+  <link rel="preload" href="assets/script.js" as="script">
+  <link rel="preload" href="assets/animations/core.js" as="script">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Stuart Brophy">
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Stuart Brophy",
+    "jobTitle": "Infrastructure Engineer",
+    "url": "https://sbrophy-dev.github.io/",
+    "sameAs": [
+      "https://github.com/SBrophy-dev",
+      "https://www.linkedin.com/in/stuart-brophy/"
+    ],
+    "knowsAbout": [
+      "AWS Cloud Infrastructure",
+      "CI/CD Pipelines",
+      "DevOps Automation",
+      "Cloud Security",
+      "Infrastructure as Code",
+      "Serverless Architecture"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Carlow",
+      "addressRegion": "Co. Carlow",
+      "addressCountry": "IE"
+    },
+    "email": "Stuartbrophy157@gmail.com",
+    "telephone": "+353866614077",
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "South-East Technological University"
+    }
+  }
+  </script>
 </head>
 
 <body>
@@ -66,6 +120,7 @@
       <ul class="nav-links" role="list">
         <li><a href="#skills"          class="nav-link">Skills</a></li>
         <li><a href="#experience"      class="nav-link">Experience</a></li>
+        <li><a href="#projects"        class="nav-link">Projects</a></li>
         <li><a href="#certifications"  class="nav-link">Certs</a></li>
         <li><a href="#education"       class="nav-link">Education</a></li>
         <li><a href="#about"           class="nav-link">About</a></li>
@@ -94,6 +149,7 @@
       <ul role="list">
         <li><a href="#skills"         class="nav-link">Skills</a></li>
         <li><a href="#experience"     class="nav-link">Experience</a></li>
+        <li><a href="#projects"       class="nav-link">Projects</a></li>
         <li><a href="#certifications" class="nav-link">Certs</a></li>
         <li><a href="#education"      class="nav-link">Education</a></li>
         <li><a href="#about"          class="nav-link">About</a></li>
@@ -138,12 +194,12 @@
         <h1 class="hero-name" id="hero-name">Stuart<br><span class="hero-name-accent">Brophy</span></h1>
 
         <!-- Role -->
-        <p class="hero-role">
+        <h2 class="hero-role">
           <span class="hero-role-prefix">$</span>
           <span class="hero-role-static">Infrastructure Engineer</span>
           <span class="hero-role-sep">—</span>
           <span id="typingText"></span>
-        </p>
+        </h2>
         <p class="hero-tagline">
           Building reliable AWS infrastructure at enterprise scale — from CI/CD pipelines and serverless workflows to process automation and cross-platform middleware.
         </p>
@@ -191,8 +247,8 @@
           </p>
         </div>
 
-        <div class="skills-grid">
-          <div class="skill-category">
+        <div class="skills-grid" itemscope itemtype="https://schema.org/ItemList">
+          <div class="skill-category" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
             <div class="skill-category-header">
               <span class="skill-category-icon" aria-hidden="true">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -200,20 +256,20 @@
                   <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
                 </svg>
               </span>
-              <h3>Cloud &amp; Infrastructure</h3>
+              <h3 itemprop="name">Cloud &amp; Infrastructure</h3>
             </div>
-            <div class="skill-pills">
-              <span class="skill-pill skill-pill-accent">AWS</span>
-              <span class="skill-pill">Connect</span>
-              <span class="skill-pill">Lambda</span>
-              <span class="skill-pill">S3</span>
-              <span class="skill-pill">DynamoDB</span>
-              <span class="skill-pill">EC2</span>
-              <span class="skill-pill">Terraform</span>
-              <span class="skill-pill">CloudFormation</span>
-              <span class="skill-pill">Linux</span>
-              <span class="skill-pill">Networking</span>
-              <span class="skill-pill">IAM</span>
+            <div class="skill-pills" itemprop="description">
+              <span class="skill-pill skill-pill-accent" itemprop="keywords">AWS</span>
+              <span class="skill-pill" itemprop="keywords">Connect</span>
+              <span class="skill-pill" itemprop="keywords">Lambda</span>
+              <span class="skill-pill" itemprop="keywords">S3</span>
+              <span class="skill-pill" itemprop="keywords">DynamoDB</span>
+              <span class="skill-pill" itemprop="keywords">EC2</span>
+              <span class="skill-pill" itemprop="keywords">Terraform</span>
+              <span class="skill-pill" itemprop="keywords">CloudFormation</span>
+              <span class="skill-pill" itemprop="keywords">Linux</span>
+              <span class="skill-pill" itemprop="keywords">Networking</span>
+              <span class="skill-pill" itemprop="keywords">IAM</span>
             </div>
           </div>
           <div class="skill-category">
@@ -295,29 +351,38 @@
           <h2 id="experience-heading">Experience</h2>
         </div>
 
-        <div class="timeline">
-          <div class="timeline-item">
+        <div class="timeline" itemscope itemtype="https://schema.org/ItemList">
+          <div class="timeline-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
             <div class="timeline-marker" aria-hidden="true"></div>
             <div class="timeline-content">
               <div class="timeline-meta">
                 <div class="timeline-role-info">
-                  <h3 class="timeline-role">Infrastructure Engineer</h3>
-                  <span class="timeline-company">Unum Ireland</span>
+                  <h3 class="timeline-role" itemprop="name">Infrastructure Engineer</h3>
+                  <span class="timeline-company" itemprop="worksFor" itemscope itemtype="https://schema.org/Organization">
+                    <span itemprop="name">Unum Ireland</span>
+                  </span>
                   <span class="timeline-location">
                     <i data-lucide="map-pin" aria-hidden="true"></i>
-                    Carlow
+                    <span itemprop="jobLocation" itemscope itemtype="https://schema.org/Place">
+                      <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                        <span itemprop="addressLocality">Carlow</span>
+                      </span>
+                    </span>
                   </span>
                 </div>
                 <span class="timeline-dates">
                   <i data-lucide="calendar" aria-hidden="true"></i>
-                  Jan 2024 – Present
+                  <span itemprop="startDate" content="2024-01">Jan 2024</span> – 
+                  <span itemprop="endDate" content="2026-04">Present</span>
                 </span>
               </div>
               <ul class="timeline-bullets">
-                <li>Support and enhance AWS-based contact centre infrastructure (Connect, Lambda, EC2, S3, DynamoDB) across large-scale enterprise environments.</li>
-                <li>Contribute to CI/CD pipelines and PaaS environments, improving release reliability and deployment speed for contact centre workloads.</li>
-                <li>Implement process automation and RPA solutions to reduce manual effort, streamline operations, and improve incident response.</li>
-                <li>Provide on-call support across cloud and on-prem middleware platforms; handle Terraform-based deployments, incident RCA, and performance and availability improvements.</li>
+                <li>Engineer on an Amazon Connect contact centre platform, developing and maintaining AWS infrastructure across Lambda (Python), EC2, DynamoDB, and S3 — proactively diagnosing production errors, optimising execution efficiency, and eliminating data discrepancies across integrated cloud services.</li>
+                <li>Delivered RPA solutions automating agent login flows and real-time PII synchronisation between telephony and internal systems, reducing repetitive manual effort for call centre agents at scale across daily operations.</li>
+                <li>Own end-to-end incident management — performing root cause analysis across cloud and on-prem platforms, driving fixes through testing, and managing stakeholder and user communications throughout; active contributor to disaster recovery planning and critical incident response calls.</li>
+                <li>Serve as enterprise Application Owner for a business-wide automation platform, overseeing onboarding, training, licensing, and deployments; recognised as Subject Matter Expert for Microsoft Power Automate, consulted by cross-functional teams on integrations, rollout plans, and troubleshooting.</li>
+                <li>Contribute across CI/CD pipelines and IaC (Terraform/CloudFormation), with hands-on involvement in Salesforce, MuleSoft, and ServiceNow releases, migrations, and cloud cost optimisation initiatives — frequently extending beyond direct team scope to unblock delivery.</li>
+                <li>Active member of the Security Champions programme and Digital Automation Team, driving security awareness across the infrastructure team and volunteering engineering capacity for business-wide automation initiatives; mentored an infrastructure intern and represented Unum at school outreach events promoting technology careers.</li>
               </ul>
             </div>
           </div>
@@ -366,6 +431,124 @@
                 <li>Developed and maintained client websites using HTML, CSS, JavaScript, and PHP.</li>
                 <li>Assisted with system administration tasks (IIS, MySQL) and issue troubleshooting.</li>
               </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section projects-section" id="projects" aria-labelledby="projects-heading">
+      <div class="container">
+
+        <div class="section-header">
+          <span class="section-label">Side Projects</span>
+          <h2 id="projects-heading">Things I've Built</h2>
+          <p class="section-desc">
+            Personal projects where I explore new stacks, solve interesting problems, and build things from scratch.
+          </p>
+        </div>
+
+        <div class="projects-grid">
+
+          <!-- Dev Legend -->
+          <div class="project-card">
+            <div class="project-carousel" data-project="devlegend">
+              <div class="project-carousel-track">
+                <img src="assets/screenshots/DevLegand/Dev-legend_Dashboard_home.png" alt="Dev Legend VS Code Extension - RPG coding dashboard home screen showing character stats and progress tracking" loading="lazy">
+                <img src="assets/screenshots/DevLegand/Dev-legend_Dashboard_skills.png" alt="Dev Legend VS Code Extension - Skills panel showing programming skills tracking with XP progression" loading="lazy">
+                <img src="assets/screenshots/DevLegand/Dev-legend_Dashboard_achievements.png" alt="Dev Legend VS Code Extension - Achievements panel with coding milestones and unlockable badges" loading="lazy">
+                <img src="assets/screenshots/DevLegand/Dev-legend_Dashboard_stats.png" alt="Dev Legend VS Code Extension - Statistics panel showing coding metrics and productivity analytics" loading="lazy">
+                <img src="assets/screenshots/DevLegand/Dev-legend_Dashboard_settings.png" alt="Dev Legend VS Code Extension - Settings panel for customizing RPG coding experience" loading="lazy">
+              </div>
+              <button class="carousel-btn carousel-prev" aria-label="Previous screenshot">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <button class="carousel-btn carousel-next" aria-label="Next screenshot">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="carousel-dots"></div>
+            </div>
+            <div class="project-info">
+              <div class="project-header">
+                <h3 class="project-name">⚔️ Dev Legend: Code RPG</h3>
+                <div class="project-tags">
+                  <span class="project-tag project-tag-accent">VS Code Extension</span>
+                  <span class="project-tag">TypeScript</span>
+                  <span class="project-tag">Vite</span>
+                </div>
+              </div>
+              <p class="project-desc">
+                A VS Code extension that turns daily coding into a persistent RPG. Track 19 skills across writing, debugging, committing, and more — with an OSRS-style XP curve, character classes, achievements, and a pixel-art dashboard.
+              </p>
+            </div>
+          </div>
+
+          <!-- Django Learning Dashboard -->
+          <div class="project-card">
+            <div class="project-carousel" data-project="django">
+              <div class="project-carousel-track">
+                <img src="assets/screenshots/DjangoLearning/Django-learning_Dashboard_home.png" alt="Django Learning Platform - Interactive web dashboard for learning Django framework with progress tracking" loading="lazy">
+                <img src="assets/screenshots/DjangoLearning/Django-learning_Module_home.png" alt="Django Learning Platform - Module overview screen showing learning paths and course structure" loading="lazy">
+                <img src="assets/screenshots/DjangoLearning/Django-learning_Module_code.png" alt="Django Learning Platform - Interactive code editor with Python Django syntax highlighting and execution" loading="lazy">
+                <img src="assets/screenshots/DjangoLearning/Django-learning_Dashboard_progress.png" alt="Django Learning Platform - Student progress tracking dashboard with completion metrics and achievements" loading="lazy">
+                <img src="assets/screenshots/DjangoLearning/Django-learning_Dashboard_api-swagger.png" alt="Django Learning Platform - REST API documentation with Swagger UI for Django backend endpoints" loading="lazy">
+              </div>
+              <button class="carousel-btn carousel-prev" aria-label="Previous screenshot">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <button class="carousel-btn carousel-next" aria-label="Next screenshot">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="carousel-dots"></div>
+            </div>
+            <div class="project-info">
+              <div class="project-header">
+                <h3 class="project-name">📚 Django Learning Dashboard</h3>
+                <div class="project-tags">
+                  <span class="project-tag project-tag-accent">Full-Stack</span>
+                  <span class="project-tag">Django</span>
+                  <span class="project-tag">PostgreSQL</span>
+                  <span class="project-tag">Docker</span>
+                </div>
+              </div>
+              <p class="project-desc">
+                An interactive web app that teaches Django through hands-on modules. Features a sandboxed code executor, progress tracking, achievements, REST API with Swagger docs, and a responsive dark UI — all containerised with Docker.
+              </p>
+            </div>
+          </div>
+
+          <!-- Realms of Iron -->
+          <div class="project-card">
+            <div class="project-carousel" data-project="strategy">
+              <div class="project-carousel-track">
+                <img src="assets/screenshots/StrategyGame/Strategy-Game_Landing.png" alt="Realms of Iron Strategy Game - Browser-based grand strategy game landing page with faction selection" loading="lazy">
+                <img src="assets/screenshots/StrategyGame/Strategy-Game_NationSelect.png" alt="Realms of Iron Strategy Game - Nation selection screen with 10 playable factions and diplomatic options" loading="lazy">
+                <img src="assets/screenshots/StrategyGame/Strategy-Game_TurnPage.png" alt="Realms of Iron Strategy Game - Turn-based gameplay interface with map, resources, and military units" loading="lazy">
+                <img src="assets/screenshots/StrategyGame/Strategy-Game_TurnOptions.png" alt="Realms of Iron Strategy Game - Turn action options including diplomacy, economics, and military commands" loading="lazy">
+                <img src="assets/screenshots/StrategyGame/Strategy-Game_TurnSummary.png" alt="Realms of Iron Strategy Game - Turn summary screen showing battle results, diplomatic outcomes, and economic changes" loading="lazy">
+              </div>
+              <button class="carousel-btn carousel-prev" aria-label="Previous screenshot">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <button class="carousel-btn carousel-next" aria-label="Next screenshot">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <div class="carousel-dots"></div>
+            </div>
+            <div class="project-info">
+              <div class="project-header">
+                <h3 class="project-name">🏰 Realms of Iron</h3>
+                <div class="project-tags">
+                  <span class="project-tag project-tag-accent">Browser Game</span>
+                  <span class="project-tag">React 19</span>
+                  <span class="project-tag">TypeScript</span>
+                  <span class="project-tag">Vitest</span>
+                </div>
+              </div>
+              <p class="project-desc">
+                A grand strategy game running entirely in the browser. Lead one of 10 factions through diplomacy, economics, and military conquest with WEGO simultaneous turns, utility-based AI, deterministic combat, and JSON-driven events.
+              </p>
             </div>
           </div>
 

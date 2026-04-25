@@ -111,6 +111,79 @@ const CertsAnimator = {
   }
 };
 
+const ProjectsAnimator = {
+  staggerDelay: 150,
+  duration: 400,
+  threshold: 0.15,
+  selector: '.project-card',
+  observedElements: new Set(),
+
+  init() {
+    const cards = document.querySelectorAll(this.selector);
+    if (!cards.length) return;
+    cards.forEach((card, index) => {
+      card.classList.add('project-card-pending');
+      ObserverRegistry.observe(card, (entry) => {
+        if (entry.isIntersecting) setTimeout(() => this.animateCard(entry.target), index * this.staggerDelay);
+      }, { threshold: this.threshold });
+      this.observedElements.add(card);
+    });
+  },
+
+  animateCard(card) {
+    if (ReducedMotion.isEnabled) { card.classList.remove('project-card-pending'); return; }
+    card.classList.add('project-card-active');
+    card.classList.remove('project-card-pending');
+    setTimeout(() => card.classList.remove('project-card-active'), this.duration);
+  }
+};
+
+const ProjectCarousel = {
+  init() {
+    document.querySelectorAll('.project-carousel').forEach(carousel => {
+      const track = carousel.querySelector('.project-carousel-track');
+      const images = track ? track.querySelectorAll('img') : [];
+      const prevBtn = carousel.querySelector('.carousel-prev');
+      const nextBtn = carousel.querySelector('.carousel-next');
+      const dotsContainer = carousel.querySelector('.carousel-dots');
+      if (!track || images.length === 0) return;
+
+      let current = 0;
+      const total = images.length;
+
+      // Build dots
+      for (let i = 0; i < total; i++) {
+        const dot = document.createElement('button');
+        dot.className = 'carousel-dot' + (i === 0 ? ' is-active' : '');
+        dot.setAttribute('aria-label', 'Go to screenshot ' + (i + 1));
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+      }
+      const dots = dotsContainer.querySelectorAll('.carousel-dot');
+
+      function goTo(index) {
+        current = ((index % total) + total) % total;
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        dots.forEach((d, i) => d.classList.toggle('is-active', i === current));
+      }
+
+      if (prevBtn) prevBtn.addEventListener('click', () => goTo(current - 1));
+      if (nextBtn) nextBtn.addEventListener('click', () => goTo(current + 1));
+
+      // Touch/swipe support
+      let startX = 0;
+      let isDragging = false;
+      carousel.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isDragging = true; }, { passive: true });
+      carousel.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+      }, { passive: true });
+    });
+  }
+};
+
 const ScrollProgress = {
   bar: null,
   boundHandler: null,

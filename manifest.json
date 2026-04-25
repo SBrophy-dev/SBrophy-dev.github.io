@@ -1,0 +1,21 @@
+{
+  "name": "Stuart Brophy — Infrastructure Engineer",
+  "short_name": "Stuart Brophy",
+  "description": "Infrastructure Engineer specialising in AWS, automation, and security. Based in Co. Carlow, Ireland.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111118",
+  "theme_color": "#111118",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["portfolio", "technology", "developer"],
+  "lang": "en",
+  "dir": "ltr",
+  "orientation": "any"
+}

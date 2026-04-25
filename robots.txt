@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /assets/screenshots/
+Disallow: /assets/sounds/
+
+Sitemap: https://sbrophy-dev.github.io/sitemap.xml

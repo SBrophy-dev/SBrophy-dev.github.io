@@ -269,7 +269,6 @@ const SoundSystem = {
   isUnlocked: false,
   audioContext: null,
   soundBuffers: new Map(),
-  soundPaths: { keystroke: 'assets/sounds/keystroke.mp3', success: 'assets/sounds/success.mp3', error: 'assets/sounds/error.mp3' },
   init() {
     if (typeof AudioContext === 'undefined' && typeof webkitAudioContext === 'undefined') return false;
     try { this.audioContext = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return false; }

@@ -224,12 +224,12 @@
     if (!trimmed) return;
     if (typeof TerminalFeedback !== 'undefined' && TerminalFeedback.getIsLoading()) return;
     renderOutput('\nvisitor@sbrophy-dev:~$ ' + input + '\n', true);
-    if (trimmed === 'clear' || trimmed === 'cls') { clearOutput(); return; }
+    if (trimmed === 'clear' || trimmed === 'cls') { clearOutput(); if (typeof SoundSystem !== 'undefined' && SoundSystem.isEnabled) SoundSystem.play('success'); return; }
     if (trimmed === 'exit' || trimmed === 'quit') { switchToVisualMode(); return; }
     var handler = commands[trimmed];
-    if (handler) { renderOutput(handler(), false); }
-    else if (typeof TerminalFeedback !== 'undefined') { TerminalFeedback.showError('Command not found: ' + trimmed + '\n\n  Type "help" for available commands.'); }
-    else { renderOutput('\n  Command not found: ' + trimmed + '\n\n  Type "help" for available commands.\n', false); }
+    if (handler) { renderOutput(handler(), false); if (typeof SoundSystem !== 'undefined' && SoundSystem.isEnabled) SoundSystem.play('success'); }
+    else if (typeof TerminalFeedback !== 'undefined') { TerminalFeedback.showError('Command not found: ' + trimmed + '\n\n  Type "help" for available commands.'); if (typeof SoundSystem !== 'undefined' && SoundSystem.isEnabled) SoundSystem.play('error'); }
+    else { renderOutput('\n  Command not found: ' + trimmed + '\n\n  Type "help" for available commands.\n', false); if (typeof SoundSystem !== 'undefined' && SoundSystem.isEnabled) SoundSystem.play('error'); }
   }
 
   function switchToTerminalMode() {
@@ -281,6 +281,8 @@
         terminalState.historyIndex = -1;
         if (terminalInput) terminalInput.value = '';
       }
+    } else if (e.key.length === 1 || e.key === 'Backspace') {
+      if (typeof SoundSystem !== 'undefined' && SoundSystem.isEnabled) SoundSystem.play('keystroke');
     }
   }
 

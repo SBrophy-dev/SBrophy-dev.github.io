@@ -2,107 +2,96 @@
   'use strict';
 
   const html = document.documentElement;
+  const prefersReduced = () =>
+    html.getAttribute('data-reduced-motion') === 'true' ||
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ═══════════════════════════════════════════
+     Theme
+     ═══════════════════════════════════════════ */
   const themeToggle = document.getElementById('themeToggle');
   const STORAGE_KEY = 'sb-theme';
 
   function getSystemTheme() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
-
   function applyTheme(theme) {
     html.setAttribute('data-theme', theme);
     localStorage.setItem(STORAGE_KEY, theme);
   }
-
-  const currentTheme = html.getAttribute('data-theme') || getSystemTheme();
-  applyTheme(currentTheme);
-
+  applyTheme(html.getAttribute('data-theme') || getSystemTheme());
   if (themeToggle) {
-    themeToggle.addEventListener('click', function () {
-      applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-    });
+    themeToggle.addEventListener('click', () =>
+      applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark')
+    );
   }
 
-  /* Reduced Motion */
+  /* ═══════════════════════════════════════════
+     Reduced Motion
+     ═══════════════════════════════════════════ */
   const motionToggle = document.getElementById('motionToggle');
   const motionToggleMobile = document.getElementById('motionToggleMobile');
   const MOTION_STORAGE_KEY = 'sb-reduced-motion';
 
-  function applyMotionPreference(reducedMotion) {
-    html.setAttribute('data-reduced-motion', reducedMotion ? 'true' : 'false');
-    localStorage.setItem(MOTION_STORAGE_KEY, reducedMotion ? 'true' : 'false');
-    if (reducedMotion) {
-      document.documentElement.style.setProperty('--forced-reduced-motion', 'reduce');
-    } else {
-      document.documentElement.style.removeProperty('--forced-reduced-motion');
-    }
+  function applyMotionPreference(reduced) {
+    html.setAttribute('data-reduced-motion', reduced ? 'true' : 'false');
+    localStorage.setItem(MOTION_STORAGE_KEY, reduced ? 'true' : 'false');
     if (motionToggleMobile) {
-      const textSpan = motionToggleMobile.querySelector('span');
-      if (textSpan) textSpan.textContent = reducedMotion ? 'Enable Motion' : 'Reduce Motion';
+      const s = motionToggleMobile.querySelector('span');
+      if (s) s.textContent = reduced ? 'Enable Motion' : 'Reduce Motion';
     }
   }
-
   const storedMotion = localStorage.getItem(MOTION_STORAGE_KEY);
-  let currentMotionPreference = storedMotion !== null
+  let currentMotion = storedMotion !== null
     ? storedMotion === 'true'
     : window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  applyMotionPreference(currentMotionPreference);
+  applyMotionPreference(currentMotion);
 
-  if (motionToggle) {
-    motionToggle.addEventListener('click', function () {
-      applyMotionPreference(html.getAttribute('data-reduced-motion') !== 'true');
-    });
-  }
-  if (motionToggleMobile) {
-    motionToggleMobile.addEventListener('click', function () {
-      applyMotionPreference(html.getAttribute('data-reduced-motion') !== 'true');
-      if (mobileMenu && mobileToggle) {
-        mobileMenu.classList.remove('is-open');
-        mobileToggle.classList.remove('is-open');
-        mobileToggle.setAttribute('aria-expanded', 'false');
-        mobileMenu.setAttribute('aria-hidden', 'true');
-      }
-    });
-  }
-
-  window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', function(e) {
-    if (localStorage.getItem(MOTION_STORAGE_KEY) === null) applyMotionPreference(e.matches);
+  if (motionToggle) motionToggle.addEventListener('click', () => applyMotionPreference(html.getAttribute('data-reduced-motion') !== 'true'));
+  if (motionToggleMobile) motionToggleMobile.addEventListener('click', () => {
+    applyMotionPreference(html.getAttribute('data-reduced-motion') !== 'true');
+    if (mobileMenu && mobileToggle) {
+      mobileMenu.classList.remove('is-open');
+      mobileToggle.classList.remove('is-open');
+    }
   });
 
-  /* Mobile menu */
+  /* ═══════════════════════════════════════════
+     Mobile Menu
+     ═══════════════════════════════════════════ */
   const mobileToggle = document.getElementById('mobileMenuToggle');
   const mobileMenu = document.getElementById('mobileMenu');
-
   if (mobileToggle && mobileMenu) {
-    mobileToggle.addEventListener('click', function () {
+    mobileToggle.addEventListener('click', () => {
       const isOpen = mobileMenu.classList.toggle('is-open');
       mobileToggle.classList.toggle('is-open', isOpen);
       mobileToggle.setAttribute('aria-expanded', String(isOpen));
       mobileMenu.setAttribute('aria-hidden', String(!isOpen));
     });
-    mobileMenu.querySelectorAll('.nav-link').forEach(function (link) {
-      link.addEventListener('click', function () {
+    mobileMenu.querySelectorAll('.nav-link').forEach(link =>
+      link.addEventListener('click', () => {
         mobileMenu.classList.remove('is-open');
         mobileToggle.classList.remove('is-open');
         mobileToggle.setAttribute('aria-expanded', 'false');
         mobileMenu.setAttribute('aria-hidden', 'true');
-      });
-    });
+      })
+    );
   }
 
-  /* Nav scroll */
+  /* ═══════════════════════════════════════════
+     Nav Scroll
+     ═══════════════════════════════════════════ */
   const nav = document.querySelector('.nav');
   function updateNav() { if (nav) nav.classList.toggle('is-scrolled', window.scrollY > 40); }
   window.addEventListener('scroll', updateNav, { passive: true });
   updateNav();
 
-  /* Active nav link */
   const sections = Array.from(document.querySelectorAll('section[id]'));
   const navLinks = Array.from(document.querySelectorAll('a.nav-link[href^="#"]'));
   function updateActiveLink() {
     let current = '';
-    sections.forEach(function (sec) { if (sec.getBoundingClientRect().top <= 80) current = sec.id; });
-    navLinks.forEach(function (link) { link.classList.toggle('is-active', link.getAttribute('href') === '#' + current); });
+    sections.forEach(sec => { if (sec.getBoundingClientRect().top <= 100) current = sec.id; });
+    navLinks.forEach(link => link.classList.toggle('is-active', link.getAttribute('href') === '#' + current));
   }
   window.addEventListener('scroll', updateActiveLink, { passive: true });
   updateActiveLink();
@@ -110,7 +99,246 @@
   /* Lucide icons */
   if (typeof lucide !== 'undefined') lucide.createIcons();
 
-  /* Terminal Mode */
+  /* ═══════════════════════════════════════════
+     Preloader
+     ═══════════════════════════════════════════ */
+  function runPreloader() {
+    const preloader = document.getElementById('preloader');
+    const counter = document.getElementById('preloaderCount');
+    const bar = document.getElementById('preloaderBar');
+    if (!preloader || prefersReduced()) {
+      if (preloader) preloader.remove();
+      revealHero();
+      return;
+    }
+    let count = 0;
+    const interval = setInterval(() => {
+      count += Math.floor(Math.random() * 12) + 3;
+      if (count >= 100) {
+        count = 100;
+        clearInterval(interval);
+        counter.textContent = count;
+        bar.style.width = '100%';
+        setTimeout(() => {
+          if (typeof gsap !== 'undefined') {
+            gsap.to(preloader, {
+              yPercent: -100,
+              duration: 0.9,
+              ease: 'power4.inOut',
+              onComplete: () => { preloader.remove(); revealHero(); }
+            });
+          } else {
+            preloader.remove();
+            revealHero();
+          }
+        }, 300);
+        return;
+      }
+      counter.textContent = count;
+      bar.style.width = count + '%';
+    }, 50);
+  }
+
+  /* ═══════════════════════════════════════════
+     Hero Reveal (GSAP)
+     ═══════════════════════════════════════════ */
+  function revealHero() {
+    const heroEls = ['.hero-badge', '.hero-logo', '.hero-name', '.hero-role', '.hero-tagline', '.hero-actions', '.hero-contact'];
+    if (prefersReduced() || typeof gsap === 'undefined') {
+      heroEls.forEach(sel => {
+        const el = document.querySelector(sel);
+        if (el) { el.style.visibility = 'visible'; el.style.opacity = '1'; }
+      });
+      return;
+    }
+
+    // Text line reveal on hero name
+    const nameLines = document.querySelectorAll('.hero-name .line');
+    if (nameLines.length) {
+      gsap.set(nameLines, { y: '110%' });
+      gsap.set('.hero-name', { visibility: 'visible' });
+    }
+
+    const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+    tl.set(heroEls.join(','), { visibility: 'visible' })
+      .from('.hero-badge', { opacity: 0, y: 20, duration: 0.6 })
+      .from('.hero-logo', { opacity: 0, y: 20, duration: 0.6 }, '-=0.4')
+      .to(nameLines, { y: '0%', duration: 1, stagger: 0.12 }, '-=0.3')
+      .from('.hero-role', { opacity: 0, y: 20, duration: 0.6 }, '-=0.5')
+      .from('.hero-tagline', { opacity: 0, y: 20, duration: 0.6 }, '-=0.4')
+      .from('.hero-actions', { opacity: 0, y: 20, duration: 0.6 }, '-=0.3')
+      .from('.hero-contact', { opacity: 0, y: 20, duration: 0.6 }, '-=0.3');
+  }
+
+  /* ═══════════════════════════════════════════
+     Lenis Smooth Scroll
+     ═══════════════════════════════════════════ */
+  function initLenis() {
+    if (typeof Lenis === 'undefined' || prefersReduced()) return;
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true,
+      smoothTouch: false,
+    });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+
+    // Connect to GSAP ScrollTrigger
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
+        if (target) { e.preventDefault(); lenis.scrollTo(target, { offset: -64 }); }
+      });
+    });
+  }
+
+  /* ═══════════════════════════════════════════
+     Custom Cursor
+     ═══════════════════════════════════════════ */
+  function initCursor() {
+    if (prefersReduced() || window.matchMedia('(hover: none)').matches) return;
+    const cursor = document.getElementById('cursor');
+    const dot = document.getElementById('cursorDot');
+    if (!cursor || !dot || typeof gsap === 'undefined') return;
+
+    let mouseX = 0, mouseY = 0;
+    let curX = 0, curY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      gsap.to(dot, { x: mouseX, y: mouseY, duration: 0.05 });
+    });
+
+    gsap.ticker.add(() => {
+      curX += (mouseX - curX) * 0.12;
+      curY += (mouseY - curY) * 0.12;
+      gsap.set(cursor, { x: curX, y: curY });
+    });
+
+    document.querySelectorAll('a, button, [data-cursor="hover"]').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+  }
+
+  /* ═══════════════════════════════════════════
+     GSAP ScrollTrigger Animations
+     ═══════════════════════════════════════════ */
+  function initScrollAnimations() {
+    if (prefersReduced() || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Section title line reveals
+    document.querySelectorAll('.section-title').forEach(title => {
+      const lines = title.querySelectorAll('.line');
+      if (!lines.length) return;
+      gsap.from(lines, {
+        y: '110%',
+        duration: 0.9,
+        ease: 'power4.out',
+        stagger: 0.1,
+        scrollTrigger: { trigger: title, start: 'top 85%' }
+      });
+    });
+
+    // Skill cards stagger
+    gsap.from('.skill-category', {
+      y: 40, opacity: 0,
+      duration: 0.7,
+      ease: 'power3.out',
+      stagger: 0.1,
+      scrollTrigger: { trigger: '.skills-grid', start: 'top 80%' }
+    });
+
+    // Timeline items
+    document.querySelectorAll('.timeline-item').forEach((item, i) => {
+      gsap.from(item, {
+        x: -30, opacity: 0,
+        duration: 0.7,
+        ease: 'power3.out',
+        delay: i * 0.1,
+        scrollTrigger: { trigger: item, start: 'top 85%' }
+      });
+    });
+
+    // Cert cards
+    gsap.from('.cert-card', {
+      y: 24, opacity: 0,
+      duration: 0.5,
+      ease: 'power3.out',
+      stagger: 0.06,
+      scrollTrigger: { trigger: '.certs-grid', start: 'top 80%' }
+    });
+
+    // Education cards
+    gsap.from('.edu-card', {
+      y: 30, opacity: 0,
+      duration: 0.6,
+      ease: 'power3.out',
+      stagger: 0.12,
+      scrollTrigger: { trigger: '.education-grid', start: 'top 80%' }
+    });
+
+    // About text paragraphs
+    gsap.from('.about-text', {
+      y: 30, opacity: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+      stagger: 0.15,
+      scrollTrigger: { trigger: '.about-content', start: 'top 80%' }
+    });
+
+    // Contact cards
+    gsap.from('.contact-card', {
+      y: 24, opacity: 0,
+      duration: 0.5,
+      ease: 'power3.out',
+      stagger: 0.08,
+      scrollTrigger: { trigger: '.contact-cards', start: 'top 85%' }
+    });
+
+    // About orbit visual
+    gsap.from('.about-orbit', {
+      scale: 0.6, opacity: 0, rotation: -30,
+      duration: 1.2,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: '.about-layout', start: 'top 75%' }
+    });
+
+    // Horizontal scroll for projects
+    const track = document.getElementById('projectsTrack');
+    const wrapper = document.querySelector('.projects-horizontal-wrapper');
+    if (track && wrapper) {
+      const getScrollAmount = () => track.scrollWidth - window.innerWidth;
+      gsap.to(track, {
+        x: () => -getScrollAmount(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.projects-section',
+          pin: true,
+          scrub: 1,
+          start: 'top top',
+          end: () => '+=' + getScrollAmount(),
+          invalidateOnRefresh: true,
+        }
+      });
+    }
+  }
+
+  /* ═══════════════════════════════════════════
+     Terminal Mode (preserved from original)
+     ═══════════════════════════════════════════ */
   const terminalState = {
     mode: 'visual',
     commandHistory: [],
@@ -135,9 +363,9 @@
       { category: "Middleware & Integration", items: ["MuleSoft / Anypoint", "IBM MQ", "PHP", "Databases", "REST APIs", "IIS / MySQL"] }
     ],
     experience: [
-      { role: "Infrastructure Engineer", company: "Unum Ireland", location: "Carlow", dates: "Jan 2024 – Present", bullets: ["Support and enhance AWS-based contact centre infrastructure (Connect, Lambda, EC2, S3, DynamoDB) across large-scale enterprise environments.", "Contribute to CI/CD pipelines and PaaS environments, improving release reliability and deployment speed for contact centre workloads.", "Implement process automation and RPA solutions to reduce manual effort, streamline operations, and improve incident response.", "Provide on-call support across cloud and on-prem middleware platforms; handle Terraform-based deployments, incident RCA, and performance and availability improvements."] },
-      { role: "Designer & IT Administrator", company: "CGL Retail Solutions", location: "Carlow", dates: "Mar 2015 – Sep 2021", bullets: ["Led end-to-end client projects combining design delivery with technical documentation and stakeholder presentations.", "Managed company IT systems (servers, workstations, networking, storage) and served as Data Protection Officer.", "Oversaw GDPR compliance, incident resolution, and data protection policy drafting."] },
-      { role: "Jr. Web Developer", company: "Design North", location: "Louth", dates: "Mar 2013 – Sep 2013", bullets: ["Developed and maintained client websites using HTML, CSS, JavaScript, and PHP.", "Assisted with system administration tasks (IIS, MySQL) and issue troubleshooting."] }
+      { role: "Infrastructure Engineer", company: "Unum Ireland", location: "Carlow", dates: "Jan 2024 – Present", bullets: ["Support and enhance AWS-based contact centre infrastructure.", "Contribute to CI/CD pipelines and PaaS environments.", "Implement process automation and RPA solutions.", "Provide on-call support across cloud and on-prem platforms."] },
+      { role: "Designer & IT Administrator", company: "CGL Retail Solutions", location: "Carlow", dates: "Mar 2015 – Sep 2021", bullets: ["Led end-to-end client projects.", "Managed company IT systems and served as Data Protection Officer.", "Oversaw GDPR compliance and incident resolution."] },
+      { role: "Jr. Web Developer", company: "Design North", location: "Louth", dates: "Mar 2013 – Sep 2013", bullets: ["Developed client websites using HTML, CSS, JavaScript, and PHP.", "Assisted with system administration tasks."] }
     ],
     certifications: [
       { name: "AWS Certified Cloud Practitioner", issuer: "Amazon Web Services" },
@@ -153,7 +381,7 @@
       { degree: "QQI Level 5 — Computers & Networking", grade: "Distinction", institution: "Carlow Institute, Carlow", dates: "2020 – 2021", subjects: ["ICT Security Policies & Management", "Networking Essentials", "Programming & Design Principles", "Operating Systems", "Communications", "Maths for IT"] }
     ],
     contact: { email: "Stuartbrophy157@gmail.com", phone: "(086) 661-4077", location: "Co. Carlow, Ireland" },
-    about: ["I'm a Co. Carlow-based Infrastructure Engineer with a background spanning cloud architecture, security, and automation — shaped by years working across enterprise AWS environments and a First Class Honours degree earned while working full-time. My focus is on building infrastructure that's reliable by design: automated where it should be, secured from the ground up, and observable enough to fail gracefully. I'm particularly drawn to the intersection of cloud engineering and security, where getting the architecture right matters as much as writing the code.", "Outside of work I stay close to the things that keep me sharp: exploring developments in AI, homelab tinkering, and PC building. I play soccer, pick up the guitar when time allows, and try to get out hiking when Carlow's weather cooperates. Photography has been a long-running interest — there's something in the discipline of framing a shot that maps surprisingly well to how I think about system design."]
+    about: ["I'm a Co. Carlow-based Infrastructure Engineer with a background spanning cloud architecture, security, and automation — shaped by years working across enterprise AWS environments and a First Class Honours degree earned while working full-time.", "Outside of work I stay close to the things that keep me sharp: exploring developments in AI, homelab tinkering, and PC building."]
   };
 
   function formatHeader(title) {
@@ -172,51 +400,46 @@
       return '\n   ╔═══════╗\n   ║  S B  ║  SBrophy-dev\n   ╚═══════╝\n';
     },
     'home': function() { return formatHeader('Stuart Brophy') + '\n  ' + cvData.hero.name + '\n  ' + cvData.hero.role + ' — ' + cvData.hero.focus + '\n\n  ' + cvData.hero.tagline + '\n\n  ● ' + cvData.hero.availability + '\n'; },
-    'skills': function() { var o = formatHeader('Skills & Technologies') + '\n  Hands-on expertise across cloud infrastructure, DevOps, security,\n  and integration — built in regulated enterprise environments.\n'; cvData.skills.forEach(function(c) { o += formatSkillCategory(c.category, c.items); }); return o; },
+    'skills': function() { var o = formatHeader('Skills & Technologies'); cvData.skills.forEach(function(c) { o += formatSkillCategory(c.category, c.items); }); return o; },
     'experience': function() { var o = formatHeader('Experience'); cvData.experience.forEach(function(j) { o += '\n  ' + j.role + '\n  ' + j.company + ' · ' + j.location + '\n  ' + j.dates + '\n\n'; j.bullets.forEach(function(b) { o += formatBullet(b); }); }); return o; },
     'exp': function() { return commands.experience(); },
     'certs': function() { var o = formatHeader('Certifications'); cvData.certifications.forEach(function(c) { o += '\n  ' + c.name + '\n    ' + c.issuer + '\n'; }); return o; },
     'certifications': function() { return commands.certs(); },
-    'projects': function() { return formatHeader('Side Projects') + '\n  [⚔️ Dev Legend: Code RPG]\n  VS Code Extension · TypeScript · Vite\n  A VS Code extension that turns daily coding into a persistent RPG.\n  Track 19 skills with an OSRS-style XP curve, character classes,\n  achievements, and a pixel-art dashboard.\n\n  [📚 Django Learning Dashboard]\n  Full-Stack · Django · PostgreSQL · Docker\n  An interactive web app that teaches Django through hands-on modules.\n  Features sandboxed code execution, progress tracking, achievements,\n  and a REST API with Swagger docs.\n\n  [🏰 Realms of Iron]\n  Browser Game · React 19 · TypeScript · Vitest\n  A grand strategy game running entirely in the browser. Lead one of\n  10 factions through diplomacy, economics, and military conquest\n  with WEGO simultaneous turns and utility-based AI.\n'; },
+    'projects': function() { return formatHeader('Side Projects') + '\n  [⚔️ Dev Legend: Code RPG]\n  VS Code Extension · TypeScript · Vite\n\n  [📚 Django Learning Dashboard]\n  Full-Stack · Django · PostgreSQL · Docker\n\n  [🏰 Realms of Iron]\n  Browser Game · React 19 · TypeScript · Vitest\n'; },
     'education': function() { var o = formatHeader('Education'); cvData.education.forEach(function(e) { o += '\n  ' + e.degree + '\n  ' + e.institution + '\n  ' + e.dates + ' · ' + e.grade + '\n\n  Subjects: ' + e.subjects.join(', ') + '\n'; }); return o; },
     'edu': function() { return commands.education(); },
     'about': function() { var o = formatHeader('About') + '\n'; cvData.about.forEach(function(p) { o += '  ' + p + '\n\n'; }); return o; },
-    'contact': function() { return formatHeader('Contact') + '\n' + formatSubsection('Email', cvData.contact.email) + formatSubsection('Phone', cvData.contact.phone) + formatSubsection('Location', cvData.contact.location) + '\n  Open to new roles, collaborations, and conversations about\n  cloud infrastructure, automation, and security.\n'; },
+    'contact': function() { return formatHeader('Contact') + '\n' + formatSubsection('Email', cvData.contact.email) + formatSubsection('Phone', cvData.contact.phone) + formatSubsection('Location', cvData.contact.location) + '\n'; },
     'matrix': function() {
       if (typeof MatrixEffect === 'undefined') return '\n  Matrix effect not available.\n';
       if (!terminalState.matrixEffect && terminal) terminalState.matrixEffect = new MatrixEffect({ container: terminal });
-      if (terminalState.matrixEffect) { var active = terminalState.matrixEffect.toggle(); return active ? '\n  Matrix effect enabled. Type "matrix" again to disable.\n' : '\n  Matrix effect disabled.\n'; }
+      if (terminalState.matrixEffect) { var active = terminalState.matrixEffect.toggle(); return active ? '\n  Matrix effect enabled.\n' : '\n  Matrix effect disabled.\n'; }
       return '\n  Could not initialize matrix effect.\n';
     },
     'sound': function() {
       if (typeof SoundSystem === 'undefined') return '\n  Sound system not available.\n';
       if (!terminalState.soundInitialized) { SoundSystem.init(); terminalState.soundInitialized = true; }
       var enabled = SoundSystem.toggle();
-      return enabled ? '\n  Sound effects enabled. Type "sound" again to disable.\n' : '\n  Sound effects disabled.\n';
+      return enabled ? '\n  Sound effects enabled.\n' : '\n  Sound effects disabled.\n';
     },
-    'sudo': function() { return '\n  [sudo] password for visitor: \n  \n  Nice try! Permission denied. \n  This incident will be reported.\n'; },
-    'coffee': function() { return '\n    ( (\n     ) )\n   ........\n   |      |]\n   \\      /\n    `----\'\n  \n  Coffee break time! ☕\n'; }
+    'sudo': function() { return '\n  Nice try! Permission denied.\n'; },
+    'coffee': function() { return '\n    ( (\n     ) )\n   ........\n   |      |]\n   \\      /\n    `----\'\n  Coffee break time! ☕\n'; }
   };
 
   function getWelcomeMessage() {
     var output = '\n';
-    if (typeof ASCIIBanner !== 'undefined') { output += ASCIIBanner.getPlainText() + '\n'; }
-    else { output += '  ╔══════════════════════════════════════════════════╗\n  ║   Welcome to SBrophy-dev terminal interface      ║\n  ║   Type "help" for available commands             ║\n  ╚══════════════════════════════════════════════════╝\n'; }
-    output += '\n';
-    return output;
+    if (typeof ASCIIBanner !== 'undefined') output += ASCIIBanner.getPlainText() + '\n';
+    else output += '  Welcome to SBrophy-dev terminal. Type "help" for commands.\n';
+    return output + '\n';
   }
 
   function renderOutput(text, useHighlighting) {
     if (terminalOutput) {
-      if (useHighlighting && typeof SyntaxHighlighter !== 'undefined') {
-        terminalOutput.innerHTML += SyntaxHighlighter.highlight(text);
-      } else {
-        terminalOutput.textContent += text;
-      }
+      if (useHighlighting && typeof SyntaxHighlighter !== 'undefined') terminalOutput.innerHTML += SyntaxHighlighter.highlight(text);
+      else terminalOutput.textContent += text;
       terminalOutput.scrollTop = terminalOutput.scrollHeight;
     }
   }
-
   function clearOutput() { if (terminalOutput) terminalOutput.textContent = ''; }
 
   function executeCommand(input) {
@@ -224,27 +447,23 @@
     if (!trimmed) return;
     if (typeof TerminalFeedback !== 'undefined' && TerminalFeedback.getIsLoading()) return;
     renderOutput('\nvisitor@sbrophy-dev:~$ ' + input + '\n', true);
-    if (trimmed === 'clear' || trimmed === 'cls') { clearOutput(); if (typeof SoundSystem !== 'undefined' && SoundSystem.isEnabled) SoundSystem.play('success'); return; }
+    if (trimmed === 'clear' || trimmed === 'cls') { clearOutput(); return; }
     if (trimmed === 'exit' || trimmed === 'quit') { switchToVisualMode(); return; }
     var handler = commands[trimmed];
-    if (handler) { renderOutput(handler(), false); if (typeof SoundSystem !== 'undefined' && SoundSystem.isEnabled) SoundSystem.play('success'); }
-    else if (typeof TerminalFeedback !== 'undefined') { TerminalFeedback.showError('Command not found: ' + trimmed + '\n\n  Type "help" for available commands.'); if (typeof SoundSystem !== 'undefined' && SoundSystem.isEnabled) SoundSystem.play('error'); }
-    else { renderOutput('\n  Command not found: ' + trimmed + '\n\n  Type "help" for available commands.\n', false); if (typeof SoundSystem !== 'undefined' && SoundSystem.isEnabled) SoundSystem.play('error'); }
+    if (handler) renderOutput(handler(), false);
+    else if (typeof TerminalFeedback !== 'undefined') TerminalFeedback.showError('Command not found: ' + trimmed + '\n\n  Type "help" for available commands.');
+    else renderOutput('\n  Command not found: ' + trimmed + '\n  Type "help" for available commands.\n', false);
   }
 
   function switchToTerminalMode() {
     terminalState.savedScrollY = window.scrollY;
     terminalState.mode = 'terminal';
-    document.querySelectorAll('main > section').forEach(function(s) { s.hidden = true; });
+    document.querySelectorAll('main > section, .marquee-section').forEach(s => s.hidden = true);
     if (terminal) terminal.hidden = false;
     html.setAttribute('data-mode', 'terminal');
-    if (modeToggle) modeToggle.setAttribute('aria-label', 'Switch to visual mode');
     localStorage.setItem('sb-mode', 'terminal');
-    // Lazy-init terminal modules only when needed
     if (typeof TerminalFeedback !== 'undefined') TerminalFeedback.init(terminalInput, terminalOutput);
-    if (!terminalState.glitchEffect && typeof GlitchEffect !== 'undefined' && terminal) {
-      terminalState.glitchEffect = new GlitchEffect({ element: terminal });
-    }
+    if (!terminalState.glitchEffect && typeof GlitchEffect !== 'undefined' && terminal) terminalState.glitchEffect = new GlitchEffect({ element: terminal });
     if (terminalInput) terminalInput.focus();
     clearOutput();
     renderOutput(getWelcomeMessage(), typeof ASCIIBanner !== 'undefined');
@@ -254,12 +473,10 @@
   function switchToVisualMode() {
     terminalState.mode = 'visual';
     if (terminal) terminal.hidden = true;
-    // Stop terminal effects to free resources
     if (terminalState.matrixEffect && terminalState.matrixEffect.isRunning) terminalState.matrixEffect.stop();
     clearOutput();
-    document.querySelectorAll('main > section').forEach(function(s) { s.hidden = false; });
+    document.querySelectorAll('main > section, .marquee-section').forEach(s => s.hidden = false);
     html.setAttribute('data-mode', 'visual');
-    if (modeToggle) modeToggle.setAttribute('aria-label', 'Switch to terminal mode');
     localStorage.setItem('sb-mode', 'visual');
     window.scrollTo(0, terminalState.savedScrollY);
   }
@@ -289,34 +506,30 @@
   function initTerminal() {
     if (localStorage.getItem('sb-mode') === 'terminal') switchToTerminalMode();
     else html.setAttribute('data-mode', 'visual');
-    if (modeToggle) modeToggle.addEventListener('click', function() { terminalState.mode === 'visual' ? switchToTerminalMode() : switchToVisualMode(); });
+    if (modeToggle) modeToggle.addEventListener('click', () => terminalState.mode === 'visual' ? switchToTerminalMode() : switchToVisualMode());
     if (terminalInput) {
       terminalInput.addEventListener('keydown', handleKeydown);
-      if (terminal) terminal.addEventListener('click', function() { terminalInput.focus(); });
+      if (terminal) terminal.addEventListener('click', () => terminalInput.focus());
     }
   }
   initTerminal();
 
-  /* Initialize Animation Modules */
-  function initAnimations() {
+  /* ═══════════════════════════════════════════
+     Init Everything
+     ═══════════════════════════════════════════ */
+  function initAll() {
+    // Animation modules from existing files
     var modules = [
       typeof NetworkCanvas !== 'undefined' ? NetworkCanvas : null,
       typeof TypingTextEffect !== 'undefined' ? TypingTextEffect : null,
-      typeof SectionRevealer !== 'undefined' ? SectionRevealer : null,
-      typeof TimelineAnimator !== 'undefined' ? TimelineAnimator : null,
-      typeof SkillsAnimator !== 'undefined' ? SkillsAnimator : null,
-      typeof CertsAnimator !== 'undefined' ? CertsAnimator : null,
-      typeof ProjectsAnimator !== 'undefined' ? ProjectsAnimator : null,
       typeof ProjectCarousel !== 'undefined' ? ProjectCarousel : null,
       typeof ScrollProgress !== 'undefined' ? ScrollProgress : null,
       typeof ParallaxEffect !== 'undefined' ? ParallaxEffect : null,
       typeof TiltEffect !== 'undefined' ? TiltEffect : null,
-      typeof MagneticButton !== 'undefined' ? MagneticButton : null,
       typeof TimelineMarkerHover !== 'undefined' ? TimelineMarkerHover : null,
       typeof SkillPillHover !== 'undefined' ? SkillPillHover : null,
       typeof IconAnimation !== 'undefined' ? IconAnimation : null,
       typeof RippleEffect !== 'undefined' ? RippleEffect : null,
-      typeof SmoothScroll !== 'undefined' ? SmoothScroll : null,
       typeof LoadingStates !== 'undefined' ? LoadingStates : null,
       typeof FocusRing !== 'undefined' ? FocusRing : null,
       typeof ToastSystem !== 'undefined' ? ToastSystem : null,
@@ -339,11 +552,22 @@
         });
       }
     }
+
+    // New systems
+    initLenis();
+    initCursor();
+    initScrollAnimations();
   }
 
+  // Run preloader on load, then init everything
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAnimations);
+    document.addEventListener('DOMContentLoaded', () => {
+      runPreloader();
+      initAll();
+    });
   } else {
-    initAnimations();
+    runPreloader();
+    initAll();
   }
+
 }());

@@ -14,8 +14,8 @@ const NetworkCanvas = {
 
   _getAccentRGB() {
     const theme = document.documentElement.getAttribute('data-theme');
-    // Use existing site's accent color: #FF9900 (dark) / #B86B00 (light)
-    return theme === 'light' ? '192,112,0' : '255,153,0';
+    // Use existing site's accent color: #4f9cf9 (dark) / #1d6fd8 (light)
+    return theme === 'light' ? '29,111,216' : '79,156,249';
   },
 
   init() {
@@ -168,34 +168,45 @@ const NetworkCanvas = {
 };
 
 /**
- * TypingText — Cycling text with typing/deleting animation
- * Adds a dynamic typing effect to the hero role area
+ * TypingTextEffect — Command/output terminal animation
+ * Types a CLI command, reveals its output result, pauses, then clears and cycles.
  */
 const TypingTextEffect = {
-  element: null,
-  texts: ['Cloud Architecture', 'CI/CD Pipelines', 'AWS Infrastructure', 'Process Automation', 'DevSecOps'],
-  speed: 55,
-  deleteSpeed: 30,
-  pauseDuration: 2200,
-  textIndex: 0,
+  commandEl: null,
+  outputEl: null,
+  outputLineEl: null,
+  cursorEl: null,
+
+  pairs: [
+    { cmd: 'list --skill cloud',      result: 'AWS Infrastructure'  },
+    { cmd: 'deploy --type pipeline',  result: 'CI/CD Pipelines'     },
+    { cmd: 'architect --scope aws',   result: 'Cloud Architecture'  },
+    { cmd: 'automate --target ops',   result: 'Process Automation'  },
+    { cmd: 'apply --policy security', result: 'DevSecOps'           },
+  ],
+
+  speed: 138,
+  deleteSpeed: 75,
+  outputRevealDelay: 450,
+  pauseDuration: 9500,
+
+  pairIndex: 0,
   charIndex: 0,
-  isDeleting: false,
+  phase: 'typing', // 'typing' | 'showing-output' | 'pausing' | 'deleting'
   timeoutId: null,
-  cursorSpan: null,
 
   init() {
-    this.element = document.getElementById('typingText');
-    if (!this.element) return;
+    this.commandEl  = document.getElementById('typingCommand');
+    this.outputEl   = document.getElementById('typingOutput');
+    this.outputLineEl = document.getElementById('heroOutputLine');
 
-    // Create cursor
-    this.cursorSpan = document.createElement('span');
-    this.cursorSpan.className = 'typing-cursor';
-    this.cursorSpan.setAttribute('aria-hidden', 'true');
-    this.cursorSpan.textContent = '▌';
-    this.element.parentNode.insertBefore(this.cursorSpan, this.element.nextSibling);
+    if (!this.commandEl || !this.outputEl) return;
 
     if (ReducedMotion.isEnabled) {
-      this.element.textContent = this.texts[0];
+      const pair = this.pairs[0];
+      this.commandEl.textContent = pair.cmd;
+      if (this.outputEl)    this.outputEl.textContent = pair.result;
+      if (this.outputLineEl) this.outputLineEl.classList.add('is-visible');
       return;
     }
 
@@ -204,7 +215,10 @@ const TypingTextEffect = {
     ReducedMotion.onChange((enabled) => {
       if (enabled) {
         if (this.timeoutId) clearTimeout(this.timeoutId);
-        this.element.textContent = this.texts[this.textIndex];
+        const pair = this.pairs[this.pairIndex];
+        this.commandEl.textContent = pair.cmd;
+        if (this.outputEl)    this.outputEl.textContent = pair.result;
+        if (this.outputLineEl) this.outputLineEl.classList.add('is-visible');
       } else {
         this._tick();
       }
@@ -213,25 +227,44 @@ const TypingTextEffect = {
 
   _tick() {
     if (ReducedMotion.isEnabled) return;
-    const current = this.texts[this.textIndex];
+    const pair = this.pairs[this.pairIndex];
 
-    if (!this.isDeleting && this.charIndex < current.length) {
-      this.charIndex++;
-      this.element.textContent = current.substring(0, this.charIndex);
-      this.timeoutId = setTimeout(() => this._tick(), this.speed);
-    } else if (!this.isDeleting && this.charIndex === current.length) {
-      this.timeoutId = setTimeout(() => {
-        this.isDeleting = true;
-        this._tick();
-      }, this.pauseDuration);
-    } else if (this.isDeleting && this.charIndex > 0) {
-      this.charIndex--;
-      this.element.textContent = current.substring(0, this.charIndex);
-      this.timeoutId = setTimeout(() => this._tick(), this.deleteSpeed);
-    } else if (this.isDeleting && this.charIndex === 0) {
-      this.isDeleting = false;
-      this.textIndex = (this.textIndex + 1) % this.texts.length;
-      this.timeoutId = setTimeout(() => this._tick(), this.speed);
+    if (this.phase === 'typing') {
+      if (this.charIndex < pair.cmd.length) {
+        this.charIndex++;
+        this.commandEl.textContent = pair.cmd.substring(0, this.charIndex);
+        this.timeoutId = setTimeout(() => this._tick(), this.speed);
+      } else {
+        // Command fully typed — reveal output after brief pause
+        this.phase = 'showing-output';
+        this.timeoutId = setTimeout(() => this._tick(), this.outputRevealDelay);
+      }
+
+    } else if (this.phase === 'showing-output') {
+      if (this.outputEl)    this.outputEl.textContent = pair.result;
+      if (this.outputLineEl) this.outputLineEl.classList.add('is-visible');
+      this.phase = 'pausing';
+      this.timeoutId = setTimeout(() => this._tick(), this.pauseDuration);
+
+    } else if (this.phase === 'pausing') {
+      // Hide output, then start deleting command
+      if (this.outputLineEl) this.outputLineEl.classList.remove('is-visible');
+      this.phase = 'deleting';
+      this.timeoutId = setTimeout(() => this._tick(), 250);
+
+    } else if (this.phase === 'deleting') {
+      if (this.charIndex > 0) {
+        this.charIndex--;
+        this.commandEl.textContent = pair.cmd.substring(0, this.charIndex);
+        this.timeoutId = setTimeout(() => this._tick(), this.deleteSpeed);
+      } else {
+        // Move to next pair
+        if (this.outputEl) this.outputEl.textContent = '';
+        this.pairIndex = (this.pairIndex + 1) % this.pairs.length;
+        this.charIndex = 0;
+        this.phase = 'typing';
+        this.timeoutId = setTimeout(() => this._tick(), this.speed);
+      }
     }
   }
 };

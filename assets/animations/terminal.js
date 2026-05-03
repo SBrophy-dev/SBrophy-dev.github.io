@@ -197,7 +197,7 @@ class MatrixEffect {
   constructor(options = {}) {
     this.container = options.container || null;
     this.fontSize = options.fontSize ?? 14;
-    this.color = options.color || 'rgba(255, 153, 0, 0.6)';
+    this.color = options.color || 'rgba(79, 156, 249, 0.6)';
     this.fadeColor = options.fadeColor || 'rgba(17, 17, 24, 0.05)';
     this.canvas = null;
     this.ctx = null;

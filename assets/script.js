@@ -91,6 +91,14 @@
   function updateActiveLink() {
     let current = '';
     sections.forEach(sec => { if (sec.getBoundingClientRect().top <= 100) current = sec.id; });
+    // If we've scrolled past the about section but contact is the last section,
+    // highlight contact since the page can't scroll far enough to bring it to the top.
+    if (current === 'about') {
+      const contact = document.getElementById('contact');
+      if (contact && contact.getBoundingClientRect().top < window.innerHeight * 0.6) {
+        current = 'contact';
+      }
+    }
     navLinks.forEach(link => link.classList.toggle('is-active', link.getAttribute('href') === '#' + current));
   }
   window.addEventListener('scroll', updateActiveLink, { passive: true });
@@ -98,6 +106,25 @@
 
   /* Lucide icons */
   if (typeof lucide !== 'undefined') lucide.createIcons();
+
+  /* ═══════════════════════════════════════════
+     Contact — Click to Reveal
+     ═══════════════════════════════════════════ */
+  document.querySelectorAll('.contact-card-reveal').forEach(card => {
+    card.addEventListener('click', () => {
+      const wasRevealed = card.classList.contains('is-revealed');
+      // Reveal
+      card.classList.add('is-revealed');
+      const valueEl = card.querySelector('.contact-value-hidden');
+      const hintEl  = card.querySelector('.contact-reveal-hint');
+      if (valueEl) valueEl.removeAttribute('aria-hidden');
+      if (hintEl)  hintEl.setAttribute('aria-hidden', 'true');
+      // If this card has a link (email/tel), navigate after a short delay
+      if (!wasRevealed) return; // first click = reveal only
+      const href = card.getAttribute('data-href');
+      if (href) window.location.href = href;
+    });
+  });
 
   /* ═══════════════════════════════════════════
      Preloader
@@ -316,24 +343,14 @@
       scrollTrigger: { trigger: '.about-layout', start: 'top 75%' }
     });
 
-    // Horizontal scroll for projects
-    const track = document.getElementById('projectsTrack');
-    const wrapper = document.querySelector('.projects-horizontal-wrapper');
-    if (track && wrapper) {
-      const getScrollAmount = () => track.scrollWidth - window.innerWidth;
-      gsap.to(track, {
-        x: () => -getScrollAmount(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.projects-section',
-          pin: true,
-          scrub: 1,
-          start: 'top top',
-          end: () => '+=' + getScrollAmount(),
-          invalidateOnRefresh: true,
-        }
-      });
-    }
+    // Project cards entrance animation
+    gsap.from('.project-card', {
+      y: 32, opacity: 0,
+      duration: 0.6,
+      ease: 'power3.out',
+      stagger: 0.08,
+      scrollTrigger: { trigger: '.projects-grid', start: 'top 80%' }
+    });
   }
 
   /* ═══════════════════════════════════════════
@@ -369,12 +386,14 @@
     ],
     certifications: [
       { name: "AWS Certified Cloud Practitioner", issuer: "Amazon Web Services" },
+      { name: "AWS Certified AI Practitioner", issuer: "Amazon Web Services" },
       { name: "SAFe 6 for Teams", issuer: "Scaled Agile" },
       { name: "SAFe 6 Scrum Master (SSM)", issuer: "Scaled Agile" },
       { name: "GDPR & Drafting Data Protection Policies", issuer: "Carlow Chamber" },
       { name: "DevSecOps Path", issuer: "TryHackMe" },
       { name: "Web Fundamentals", issuer: "TryHackMe" },
-      { name: "Complete Beginner · Pre Security · Intro to Cybersecurity", issuer: "TryHackMe" }
+      { name: "Complete Beginner · Pre Security · Intro to Cybersecurity", issuer: "TryHackMe" },
+      { name: "Software Security Practitioner (SSP)", issuer: "Security Compass" }
     ],
     education: [
       { degree: "BA in Cybercrime & IT Security", grade: "First Class Honours — 1:1", institution: "South-East Technological University, Carlow", dates: "2021 – 2024", subjects: ["Networking", "Scripting for Cybercrime", "Incident Handling & Risk Assessment", "Secure Systems Administration", "Cybercrime Legislation & Compliance", "Cryptography", "Discrete Structures & Algorithms"] },

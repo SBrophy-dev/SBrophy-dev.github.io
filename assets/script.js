@@ -370,6 +370,7 @@
   const terminal = document.getElementById('terminal');
   const terminalOutput = document.getElementById('terminalOutput');
   const terminalInput = document.getElementById('terminalInput');
+  const mobileModeMedia = window.matchMedia('(max-width: 640px)');
 
   const cvData = {
     hero: { name: "Stuart Brophy", role: "Infrastructure Engineer", focus: "Cloud · Automation · Security", tagline: "Building reliable AWS infrastructure at enterprise scale — from CI/CD pipelines and serverless workflows to process automation and cross-platform middleware.", availability: "Open to new opportunities" },
@@ -489,15 +490,18 @@
     if (terminalState.glitchEffect) terminalState.glitchEffect.trigger();
   }
 
-  function switchToVisualMode() {
+  function switchToVisualMode(options = {}) {
+    const persist = options.persist !== false;
+    const restoreScroll = options.restoreScroll !== false;
     terminalState.mode = 'visual';
     if (terminal) terminal.hidden = true;
     if (terminalState.matrixEffect && terminalState.matrixEffect.isRunning) terminalState.matrixEffect.stop();
     clearOutput();
     document.querySelectorAll('main > section, .marquee-section').forEach(s => s.hidden = false);
     html.setAttribute('data-mode', 'visual');
-    localStorage.setItem('sb-mode', 'visual');
-    window.scrollTo(0, terminalState.savedScrollY);
+    if (persist) localStorage.setItem('sb-mode', 'visual');
+    if (restoreScroll) window.scrollTo(0, terminalState.savedScrollY);
+    else if (!window.location.hash) window.scrollTo(0, 0);
   }
 
   function handleKeydown(e) {
@@ -523,8 +527,18 @@
   }
 
   function initTerminal() {
-    if (localStorage.getItem('sb-mode') === 'terminal') switchToTerminalMode();
+    if (mobileModeMedia.matches) switchToVisualMode({ persist: false, restoreScroll: false });
+    else if (localStorage.getItem('sb-mode') === 'terminal') switchToTerminalMode();
     else html.setAttribute('data-mode', 'visual');
+
+    const handleMobileModeChange = (event) => {
+      if (event.matches && terminalState.mode === 'terminal') {
+        switchToVisualMode({ persist: false, restoreScroll: false });
+      }
+    };
+    if (mobileModeMedia.addEventListener) mobileModeMedia.addEventListener('change', handleMobileModeChange);
+    else if (mobileModeMedia.addListener) mobileModeMedia.addListener(handleMobileModeChange);
+
     if (modeToggle) modeToggle.addEventListener('click', () => terminalState.mode === 'visual' ? switchToTerminalMode() : switchToVisualMode());
     if (terminalInput) {
       terminalInput.addEventListener('keydown', handleKeydown);

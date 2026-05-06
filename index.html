@@ -32,8 +32,9 @@
       var s = localStorage.getItem('sb-theme');
       var t = s || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       document.documentElement.setAttribute('data-theme', t);
-      // Initialize mode to visual by default (prevents flash of hidden content)
-      var m = localStorage.getItem('sb-mode');
+      // Initialize mobile to visual so the first viewport is always the homepage.
+      var isMobileMode = window.matchMedia('(max-width: 640px)').matches;
+      var m = isMobileMode ? 'visual' : localStorage.getItem('sb-mode');
       if (m !== 'terminal') m = 'visual';
       document.documentElement.setAttribute('data-mode', m);
       // Initialize reduced motion preference

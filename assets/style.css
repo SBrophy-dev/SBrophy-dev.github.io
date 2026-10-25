@@ -368,6 +368,51 @@ body::after {
   padding: 0 var(--space-6);
 }
 
+/* Cloud operations panel in the hero */
+.hero-cloud-map {
+  position: absolute;
+  top: 50%;
+  right: var(--space-6);
+  width: min(34vw, 390px);
+  min-width: 300px;
+  padding: 18px 20px 16px;
+  transform: translateY(-43%);
+  border: 1px solid rgba(79, 156, 249, 0.27);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(21, 29, 43, 0.94), rgba(12, 16, 25, 0.88));
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.34), inset 0 1px rgba(255,255,255,0.05);
+  font-family: 'JetBrains Mono', monospace;
+  z-index: 4;
+  overflow: hidden;
+}
+[data-theme="light"] .hero-cloud-map { background: linear-gradient(145deg, rgba(255,255,255,.97), rgba(236,244,255,.94)); }
+.cloud-map-topline, .cloud-map-status, .cloud-map-nodes, .cloud-map-nodes span, .cloud-map-stats { display: flex; align-items: center; }
+.cloud-map-topline { justify-content: space-between; color: var(--text-3); font-size: 9px; letter-spacing: .12em; }
+.cloud-map-status { gap: 7px; color: #62d6a5; }
+.cloud-map-status i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 10px currentColor; }
+.cloud-map-hub { position: relative; z-index: 1; width: max-content; margin: 20px auto 0; padding: 10px 15px; display: flex; align-items: center; gap: 9px; border: 1px solid var(--accent); border-radius: 10px; background: var(--surface-raised); color: var(--text-1); font-size: 10px; letter-spacing: .06em; box-shadow: 0 0 24px var(--accent-glow); }
+.cloud-map-hub svg { width: 18px; height: 18px; color: var(--accent); }
+.cloud-map-lines { position: absolute; left: 10%; top: 76px; width: 80%; height: 118px; overflow: visible; }
+.cloud-map-lines path { fill: none; stroke: var(--accent); stroke-opacity: .4; stroke-width: 1.5; stroke-dasharray: 4 5; }
+.cloud-map-lines circle { fill: var(--accent); filter: drop-shadow(0 0 5px var(--accent)); }
+.cloud-map-nodes { position: relative; justify-content: space-between; margin: 26px 0 19px; }
+.cloud-map-nodes span { gap: 5px; padding: 7px 8px; border: 1px solid var(--border); border-radius: 7px; background: var(--surface); color: var(--text-2); font-size: 8px; letter-spacing: .04em; }
+.cloud-map-nodes svg { width: 12px; height: 12px; color: var(--accent); }
+.cloud-map-stats { justify-content: space-between; padding-top: 14px; border-top: 1px solid var(--border); }
+.cloud-map-stats div { display: grid; gap: 2px; }
+.cloud-map-stats strong { color: var(--text-1); font: 600 20px/1 'Cabinet Grotesk', sans-serif; }
+.cloud-map-stats strong span { color: var(--accent); }
+.cloud-map-stats div > span { color: var(--text-3); font-size: 8px; letter-spacing: .08em; }
+.clipchimp-art { position: relative; overflow: hidden; background: radial-gradient(ellipse at 75% 20%, rgba(184, 115, 255, .22), transparent 45%), linear-gradient(135deg, #11121e, #182739 70%, #10141d); }
+.clipchimp-art::before, .clipchimp-art::after { content: ''; position: absolute; width: 160px; height: 160px; border: 1px solid rgba(142, 173, 255, .13); border-radius: 50%; }
+.clipchimp-art::before { right: -30px; top: -70px; box-shadow: 0 0 0 18px rgba(142,173,255,.025), 0 0 0 38px rgba(142,173,255,.02); }
+.clipchimp-art::after { left: -100px; bottom: -130px; }
+.clipchimp-terminal { position: relative; z-index: 1; display: grid; gap: 10px; padding: 17px 20px; border: 1px solid rgba(165, 178, 225, .23); border-radius: 12px; background: rgba(10, 13, 22, .72); box-shadow: 0 20px 45px rgba(0,0,0,.26); font-family: 'JetBrains Mono', monospace; }
+.clipchimp-terminal span, .clipchimp-terminal small { color: #8796b5; font-size: 9px; letter-spacing: .13em; }
+.clipchimp-terminal b { color: #f4f4ff; font-size: clamp(15px, 2vw, 23px); letter-spacing: -.06em; }
+.clipchimp-terminal b i { color: #9c83ff; font-style: normal; }
+.clipchimp-terminal small { color: #8eb9d8; letter-spacing: .07em; }
+
 /* Hero elements start hidden for GSAP reveal */
 .hero-badge,
 .hero-logo,
@@ -466,6 +511,7 @@ body::after {
   color: var(--text-2);
   line-height: 1.7;
   max-width: 600px;
+  min-height: 6.8em;
   margin-bottom: var(--space-12);
 }
 
@@ -1266,6 +1312,8 @@ body::after {
 
 /* ── Responsive — Tablet ── */
 @media (max-width: 900px) {
+  .hero-cloud-map { position: relative; top: auto; right: auto; width: min(100%, 430px); min-width: 0; margin: var(--space-8) 0 var(--space-8); transform: none; }
+  .hero-tagline { min-height: 0; }
   .sticky-section { grid-template-columns: 1fr; gap: var(--space-8); }
   .sticky-label { position: static; }
   .skills-grid { grid-template-columns: 1fr; }
@@ -1288,6 +1336,8 @@ body::after {
   .hero-logo-svg { height: 56px; }
   .nav-logo-svg { height: 26px; }
   .hero-actions { flex-direction: column; align-items: flex-start; }
+  .hero-cloud-map { padding: 15px; }
+  .cloud-map-stats strong { font-size: 18px; }
   .hero-contact { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
   .certs-grid { grid-template-columns: 1fr; }
   .timeline-meta { flex-direction: column; gap: var(--space-1); }

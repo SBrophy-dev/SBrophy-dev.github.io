@@ -373,15 +373,15 @@
   const mobileModeMedia = window.matchMedia('(max-width: 640px)');
 
   const cvData = {
-    hero: { name: "Stuart Brophy", role: "Infrastructure Engineer", focus: "Cloud · Automation · Security", tagline: "Building reliable AWS infrastructure at enterprise scale — from CI/CD pipelines and serverless workflows to process automation and cross-platform middleware.", availability: "Open to new opportunities" },
+    hero: { name: "Stuart Brophy", role: "Infrastructure Engineer", focus: "Cloud · Automation · Security", tagline: "Engineering an Amazon Connect estate across nine accounts for 600+ agents, with serverless tools, automation, and production incident ownership.", availability: "Open to new opportunities" },
     skills: [
-      { category: "Cloud & Infrastructure", items: ["AWS", "Connect", "Lambda", "S3", "DynamoDB", "EC2", "Terraform", "CloudFormation", "Linux", "Networking", "IAM"] },
-      { category: "Automation & DevOps", items: ["Python", "PowerShell", "Bash", "CI/CD", "RPA", "Serverless", "Microservices", "Version Control", "Agile / SAFe"] },
+      { category: "Cloud & Infrastructure", items: ["AWS", "Amazon Connect", "Lambda", "S3", "DynamoDB", "EC2", "Terraform", "CloudFormation", "Linux", "Networking", "IAM", "Infrastructure as Code"] },
+      { category: "Automation & DevOps", items: ["Python", "TypeScript", "PowerShell", "Bash", "Power Automate", "REST APIs", "CI/CD", "RPA", "Serverless", "Microservices", "Git", "JUnit / SARIF"] },
       { category: "Security & Compliance", items: ["DevSecOps", "Incident Response", "IAM", "GDPR", "Data Protection", "Monitoring", "Risk Assessment", "Cryptography"] },
       { category: "Middleware & Integration", items: ["MuleSoft / Anypoint", "IBM MQ", "PHP", "Databases", "REST APIs", "IIS / MySQL"] }
     ],
     experience: [
-      { role: "Infrastructure Engineer", company: "Unum Ireland", location: "Carlow", dates: "Jan 2024 – Present", bullets: ["Support and enhance AWS-based contact centre infrastructure.", "Contribute to CI/CD pipelines and PaaS environments.", "Implement process automation and RPA solutions.", "Provide on-call support across cloud and on-prem platforms."] },
+      { role: "Infrastructure Engineer", company: "Unum Ireland", location: "Carlow", dates: "Jan 2024 – Present", bullets: ["Engineer an Amazon Connect estate across nine accounts for 600+ agents.", "Build Lambda (Python), EC2, DynamoDB, and S3 integrations.", "Cut a key call workflow from about 10 minutes to 2 through agent login automation.", "Resolve 30+ monthly incidents through root cause analysis and corrective action."] },
       { role: "Designer & IT Administrator", company: "CGL Retail Solutions", location: "Carlow", dates: "Mar 2015 – Sep 2021", bullets: ["Led end-to-end client projects.", "Managed company IT systems and served as Data Protection Officer.", "Oversaw GDPR compliance and incident resolution."] },
       { role: "Jr. Web Developer", company: "Design North", location: "Louth", dates: "Mar 2013 – Sep 2013", bullets: ["Developed client websites using HTML, CSS, JavaScript, and PHP.", "Assisted with system administration tasks."] }
     ],
@@ -406,51 +406,51 @@
 
   function formatHeader(title) {
     const line = '─'.repeat(50);
-    return '\n┌' + line + '┐\n│ ' + title.padEnd(48) + ' │\n└' + line + '┘\n';
+    return '\r\n┌' + line + '┐\r\n│ ' + title.padEnd(48) + ' │\r\n└' + line + '┘\r\n';
   }
-  function formatBullet(text) { return '  • ' + text + '\n'; }
-  function formatSubsection(label, value) { return '  ' + label + ': ' + value + '\n'; }
-  function formatSkillCategory(category, skills) { return '\n  [' + category + ']\n  ' + skills.join(' · ') + '\n'; }
+  function formatBullet(text) { return '  • ' + text + '\r\n'; }
+  function formatSubsection(label, value) { return '  ' + label + ': ' + value + '\r\n'; }
+  function formatSkillCategory(category, skills) { return '\r\n  [' + category + ']\r\n  ' + skills.join(' · ') + '\r\n'; }
 
   var commands = {
-    'help': function() { return formatHeader('Available Commands') + '\n  help, ?          Show this help message\n  home             Display introduction\n  logo             Display the SBrophy-dev logo\n  skills           Display skills & technologies\n  experience, exp  Display work experience\n  projects         Display side projects\n  certs            Display certifications\n  education, edu   Display education\n  about            Display about section\n  contact          Display contact information\n  matrix           Toggle Matrix background effect\n  sound            Toggle sound effects\n  clear, cls       Clear terminal output\n  exit, quit       Return to visual mode\n\n  Tip: Use ↑/↓ arrows to navigate command history\n'; },
+    'help': function() { return formatHeader('Available Commands') + '\r\n  help, ?          Show this help message\r\n  home             Display introduction\r\n  logo             Display the SBrophy-dev logo\r\n  skills           Display skills & technologies\r\n  experience, exp  Display work experience\r\n  projects         Display side projects\r\n  certs            Display certifications\r\n  education, edu   Display education\r\n  about            Display about section\r\n  contact          Display contact information\r\n  matrix           Toggle Matrix background effect\r\n  sound            Toggle sound effects\r\n  clear, cls       Clear terminal output\r\n  exit, quit       Return to visual mode\r\n\r\n  Tip: Use ↑/↓ arrows to navigate command history\r\n'; },
     '?': function() { return commands.help(); },
     'logo': function() {
-      if (typeof ASCIIBanner !== 'undefined') return '\n' + ASCIIBanner.getPlainText(false) + '\n';
-      return '\n   ╔═══════╗\n   ║  S B  ║  SBrophy-dev\n   ╚═══════╝\n';
+      if (typeof ASCIIBanner !== 'undefined') return '\r\n' + ASCIIBanner.getPlainText(false) + '\r\n';
+      return '\r\n   ╔═══════╗\r\n   ║  S B  ║  SBrophy-dev\r\n   ╚═══════╝\r\n';
     },
-    'home': function() { return formatHeader('Stuart Brophy') + '\n  ' + cvData.hero.name + '\n  ' + cvData.hero.role + ' — ' + cvData.hero.focus + '\n\n  ' + cvData.hero.tagline + '\n\n  ● ' + cvData.hero.availability + '\n'; },
+    'home': function() { return formatHeader('Stuart Brophy') + '\r\n  ' + cvData.hero.name + '\r\n  ' + cvData.hero.role + ' — ' + cvData.hero.focus + '\r\n\r\n  ' + cvData.hero.tagline + '\r\n\r\n  ● ' + cvData.hero.availability + '\r\n'; },
     'skills': function() { var o = formatHeader('Skills & Technologies'); cvData.skills.forEach(function(c) { o += formatSkillCategory(c.category, c.items); }); return o; },
-    'experience': function() { var o = formatHeader('Experience'); cvData.experience.forEach(function(j) { o += '\n  ' + j.role + '\n  ' + j.company + ' · ' + j.location + '\n  ' + j.dates + '\n\n'; j.bullets.forEach(function(b) { o += formatBullet(b); }); }); return o; },
+    'experience': function() { var o = formatHeader('Experience'); cvData.experience.forEach(function(j) { o += '\r\n  ' + j.role + '\r\n  ' + j.company + ' · ' + j.location + '\r\n  ' + j.dates + '\r\n\r\n'; j.bullets.forEach(function(b) { o += formatBullet(b); }); }); return o; },
     'exp': function() { return commands.experience(); },
-    'certs': function() { var o = formatHeader('Certifications'); cvData.certifications.forEach(function(c) { o += '\n  ' + c.name + '\n    ' + c.issuer + '\n'; }); return o; },
+    'certs': function() { var o = formatHeader('Certifications'); cvData.certifications.forEach(function(c) { o += '\r\n  ' + c.name + '\r\n    ' + c.issuer + '\r\n'; }); return o; },
     'certifications': function() { return commands.certs(); },
-    'projects': function() { return formatHeader('Side Projects') + '\n  [⚔️ Dev Legend: Code RPG]\n  VS Code Extension · TypeScript · Vite\n\n  [📚 Django Learning Dashboard]\n  Full-Stack · Django · PostgreSQL · Docker\n\n  [🏰 Realms of Iron]\n  Browser Game · React 19 · TypeScript · Vitest\n'; },
-    'education': function() { var o = formatHeader('Education'); cvData.education.forEach(function(e) { o += '\n  ' + e.degree + '\n  ' + e.institution + '\n  ' + e.dates + ' · ' + e.grade + '\n\n  Subjects: ' + e.subjects.join(', ') + '\n'; }); return o; },
+    'projects': function() { return formatHeader('Side Projects') + '\r\n  [✂️ Clip Chimp]\r\n  Local AI video pipeline · Whisper · Gemma · FFmpeg\r\n\r\n  [🔍 FlowLens]\r\n  Amazon Connect flow simulation · Audit · CI runner\r\n\r\n  [⚔️ Dev Legend: Code RPG]\r\n  VS Code Extension · TypeScript · Vite\r\n\r\n  [📚 Django Learning Dashboard]\r\n  Full-Stack · Django · PostgreSQL · Docker\r\n\r\n  [🏰 Realms of Iron]\r\n  Browser Game · React 19 · TypeScript · Vitest\r\n'; },
+    'education': function() { var o = formatHeader('Education'); cvData.education.forEach(function(e) { o += '\r\n  ' + e.degree + '\r\n  ' + e.institution + '\r\n  ' + e.dates + ' · ' + e.grade + '\r\n\r\n  Subjects: ' + e.subjects.join(', ') + '\r\n'; }); return o; },
     'edu': function() { return commands.education(); },
-    'about': function() { var o = formatHeader('About') + '\n'; cvData.about.forEach(function(p) { o += '  ' + p + '\n\n'; }); return o; },
-    'contact': function() { return formatHeader('Contact') + '\n' + formatSubsection('Email', cvData.contact.email) + formatSubsection('Phone', cvData.contact.phone) + formatSubsection('Location', cvData.contact.location) + '\n'; },
+    'about': function() { var o = formatHeader('About') + '\r\n'; cvData.about.forEach(function(p) { o += '  ' + p + '\r\n\r\n'; }); return o; },
+    'contact': function() { return formatHeader('Contact') + '\r\n' + formatSubsection('Email', cvData.contact.email) + formatSubsection('Phone', cvData.contact.phone) + formatSubsection('Location', cvData.contact.location) + '\r\n'; },
     'matrix': function() {
-      if (typeof MatrixEffect === 'undefined') return '\n  Matrix effect not available.\n';
+      if (typeof MatrixEffect === 'undefined') return '\r\n  Matrix effect not available.\r\n';
       if (!terminalState.matrixEffect && terminal) terminalState.matrixEffect = new MatrixEffect({ container: terminal });
-      if (terminalState.matrixEffect) { var active = terminalState.matrixEffect.toggle(); return active ? '\n  Matrix effect enabled.\n' : '\n  Matrix effect disabled.\n'; }
-      return '\n  Could not initialize matrix effect.\n';
+      if (terminalState.matrixEffect) { var active = terminalState.matrixEffect.toggle(); return active ? '\r\n  Matrix effect enabled.\r\n' : '\r\n  Matrix effect disabled.\r\n'; }
+      return '\r\n  Could not initialize matrix effect.\r\n';
     },
     'sound': function() {
-      if (typeof SoundSystem === 'undefined') return '\n  Sound system not available.\n';
+      if (typeof SoundSystem === 'undefined') return '\r\n  Sound system not available.\r\n';
       if (!terminalState.soundInitialized) { SoundSystem.init(); terminalState.soundInitialized = true; }
       var enabled = SoundSystem.toggle();
-      return enabled ? '\n  Sound effects enabled.\n' : '\n  Sound effects disabled.\n';
+      return enabled ? '\r\n  Sound effects enabled.\r\n' : '\r\n  Sound effects disabled.\r\n';
     },
-    'sudo': function() { return '\n  Nice try! Permission denied.\n'; },
-    'coffee': function() { return '\n    ( (\n     ) )\n   ........\n   |      |]\n   \\      /\n    `----\'\n  Coffee break time! ☕\n'; }
+    'sudo': function() { return '\r\n  Nice try! Permission denied.\r\n'; },
+    'coffee': function() { return '\r\n    ( (\r\n     ) )\r\n   ........\r\n   |      |]\r\n   \\      /\r\n    `----\'\r\n  Coffee break time! ☕\r\n'; }
   };
 
   function getWelcomeMessage() {
-    var output = '\n';
-    if (typeof ASCIIBanner !== 'undefined') output += ASCIIBanner.getPlainText() + '\n';
-    else output += '  Welcome to SBrophy-dev terminal. Type "help" for commands.\n';
-    return output + '\n';
+    var output = '\r\n';
+    if (typeof ASCIIBanner !== 'undefined') output += ASCIIBanner.getPlainText() + '\r\n';
+    else output += '  Welcome to SBrophy-dev terminal. Type "help" for commands.\r\n';
+    return output + '\r\n';
   }
 
   function renderOutput(text, useHighlighting) {
@@ -466,13 +466,13 @@
     var trimmed = input.trim().toLowerCase();
     if (!trimmed) return;
     if (typeof TerminalFeedback !== 'undefined' && TerminalFeedback.getIsLoading()) return;
-    renderOutput('\nvisitor@sbrophy-dev:~$ ' + input + '\n', true);
+    renderOutput('\r\nvisitor@sbrophy-dev:~$ ' + input + '\r\n', true);
     if (trimmed === 'clear' || trimmed === 'cls') { clearOutput(); return; }
     if (trimmed === 'exit' || trimmed === 'quit') { switchToVisualMode(); return; }
     var handler = commands[trimmed];
     if (handler) renderOutput(handler(), false);
-    else if (typeof TerminalFeedback !== 'undefined') TerminalFeedback.showError('Command not found: ' + trimmed + '\n\n  Type "help" for available commands.');
-    else renderOutput('\n  Command not found: ' + trimmed + '\n  Type "help" for available commands.\n', false);
+    else if (typeof TerminalFeedback !== 'undefined') TerminalFeedback.showError('Command not found: ' + trimmed + '\r\n\r\n  Type "help" for available commands.');
+    else renderOutput('\r\n  Command not found: ' + trimmed + '\r\n  Type "help" for available commands.\r\n', false);
   }
 
   function switchToTerminalMode() {
@@ -576,7 +576,7 @@
 
     // Particle effects on CV download
     if (typeof ParticleSystem !== 'undefined') {
-      var cvLink = document.querySelector('a[href*="Stuart_Brophy_CV.pdf"]');
+      var cvLink = document.querySelector('a[href*="Stuart_Brophy_CV_Ext-2.docx"]');
       if (cvLink) {
         cvLink.addEventListener('click', function() {
           var rect = this.getBoundingClientRect();

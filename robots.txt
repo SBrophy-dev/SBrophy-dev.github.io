@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /assets/sounds/
 
-Sitemap: https://sbrophy-dev.github.io/sitemap.xml
+Sitemap: https://sbrophy.click/sitemap.xml

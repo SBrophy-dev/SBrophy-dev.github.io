@@ -373,7 +373,7 @@
   const mobileModeMedia = window.matchMedia('(max-width: 640px)');
 
   const cvData = {
-    hero: { name: "Stuart Brophy", role: "Infrastructure Engineer", focus: "Cloud · Automation · Security", tagline: "Engineering an Amazon Connect estate across nine accounts for 600+ agents, with serverless tools, automation, and production incident ownership.", availability: "Open to new opportunities" },
+    hero: { name: "Stuart Brophy", role: "Infrastructure Engineer", focus: "Cloud · Automation · Security", tagline: "Engineering an Amazon Connect estate across nine accounts for 600+ agents, with serverless tools, automation, and production incident ownership.", availability: "Open to conversations · AWS & Amazon Connect" },
     skills: [
       { category: "Cloud & Infrastructure", items: ["AWS", "Amazon Connect", "Lambda", "S3", "DynamoDB", "EC2", "Terraform", "CloudFormation", "Linux", "Networking", "IAM", "Infrastructure as Code"] },
       { category: "Automation & DevOps", items: ["Python", "TypeScript", "PowerShell", "Bash", "Power Automate", "REST APIs", "CI/CD", "RPA", "Serverless", "Microservices", "Git", "JUnit / SARIF"] },

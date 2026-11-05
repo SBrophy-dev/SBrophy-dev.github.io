@@ -178,6 +178,7 @@ const TypingTextEffect = {
   cursorEl: null,
 
   pairs: [
+    { cmd: 'list --platform',         result: 'Amazon Connect'      },
     { cmd: 'list --skill cloud',      result: 'AWS Infrastructure'  },
     { cmd: 'deploy --type pipeline',  result: 'CI/CD Pipelines'     },
     { cmd: 'architect --scope aws',   result: 'Cloud Architecture'  },

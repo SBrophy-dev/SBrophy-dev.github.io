@@ -1,7 +1,7 @@
 {
-  "name": "Stuart Brophy — Infrastructure Engineer",
+  "name": "Stuart Brophy — AWS Cloud & Amazon Connect Engineer",
   "short_name": "Stuart Brophy",
-  "description": "Infrastructure Engineer specialising in AWS, automation, and security. Based in Co. Carlow, Ireland.",
+  "description": "AWS Cloud and Amazon Connect Engineer in Ireland. Amazon Connect, Lambda, Terraform, and automation.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#111118",
@@ -11,10 +11,32 @@
       "src": "assets/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
-  "categories": ["portfolio", "technology", "developer"],
+  "categories": [
+    "portfolio",
+    "technology",
+    "developer"
+  ],
   "lang": "en",
   "dir": "ltr",
   "orientation": "any"

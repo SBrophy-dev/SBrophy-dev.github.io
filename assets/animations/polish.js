@@ -52,9 +52,24 @@ const SmoothScroll = {
   }
 };
 
+// Skeleton shimmer for lazy-loaded screenshots until each image arrives,
+// and a labelled fallback if one fails to load.
 const LoadingStates = {
   init() {
-    // Available for future use
+    document.querySelectorAll('.project-carousel-track img').forEach((img) => {
+      if (img.complete && img.naturalWidth > 0) return;
+      img.classList.add('is-loading');
+      img.setAttribute('aria-busy', 'true');
+      const done = () => {
+        img.classList.remove('is-loading');
+        img.removeAttribute('aria-busy');
+      };
+      img.addEventListener('load', done, { once: true });
+      img.addEventListener('error', () => {
+        done();
+        img.classList.add('is-error');
+      }, { once: true });
+    });
   }
 };
 

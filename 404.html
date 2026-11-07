@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page not found (404) | Stuart Brophy</title>
+  <meta name="description" content="This page doesn't exist on sbrophy.click. Head back to Stuart Brophy's AWS Cloud and Amazon Connect portfolio.">
+  <meta name="robots" content="noindex, follow">
+  <meta property="og:title" content="Page not found | Stuart Brophy">
+  <meta property="og:image" content="https://sbrophy.click/assets/og-banner.png">
+  <meta name="theme-color" content="#111118">
+
+  <script>
+    (function () {
+      var s = null; try { s = localStorage.getItem('sb-theme'); } catch (e) {}
+      document.documentElement.setAttribute('data-theme', s || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+    }());
+  </script>
+  <!-- Absolute paths: GitHub Pages serves this file at any missing URL, including nested ones -->
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500&f[]=satoshi@700,500,400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+</head>
+<body class="page-simple">
+  <header class="page-simple-header">
+    <a href="/" aria-label="Stuart Brophy — back to home"><span class="page-simple-mark" aria-hidden="true">SB</span>sbrophy.click</a>
+  </header>
+
+  <main class="page-simple-main notfound" id="main">
+    <p class="notfound-code">$ curl -I <span id="missingPath">this-page</span><br>&rarr; HTTP/1.1 404 Not Found</p>
+    <h1>This route doesn't resolve.</h1>
+    <p>The page you were looking for has moved or never existed. Everything on this site lives on the home page: experience, Amazon Connect projects, certifications and contact details.</p>
+    <div class="page-actions">
+      <a href="/" class="btn btn-primary">Back to home</a>
+      <a href="/#projects" class="btn btn-secondary">See projects</a>
+      <a href="/#contact" class="btn btn-secondary">Contact</a>
+    </div>
+  </main>
+
+  <footer class="page-simple-footer">
+    <span>&copy; 2026 Stuart Brophy</span>
+    <a href="/privacy.html">Privacy</a>
+  </footer>
+
+  <script>
+    (function () {
+      var el = document.getElementById('missingPath');
+      if (el && location.pathname.length > 1) el.textContent = location.pathname;
+    }());
+  </script>
+  <script data-goatcounter="https://sbrophy.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
